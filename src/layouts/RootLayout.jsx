@@ -4,7 +4,7 @@ import Navbar from '../pages/Shared/Navbar/Navbar';
 import Footer from '../pages/Shared/Footer/Footer';
 import CustomCursor from '../pages/CustomCursor';
 
-
+//service_03te4mi
 const RootLayout = () => {
   return (
     <div className="relative">
