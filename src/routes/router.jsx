@@ -8,6 +8,7 @@ import Projects from "../pages/Projects";
 import Contact from "../pages/Contact";
 import Hero from "../pages/Hero";
 import Home from "../layouts/Home";
+import Resume from "../pages/Resume";
 
 export const router = createBrowserRouter([
   {
@@ -37,6 +38,10 @@ export const router = createBrowserRouter([
     {
         path:"contact",
         Component:Contact
+    },
+    {
+      path: "resume",
+      Component: Resume
     }
    ]
   },

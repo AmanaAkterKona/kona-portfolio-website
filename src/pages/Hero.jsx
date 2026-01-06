@@ -147,8 +147,11 @@ const Hero = () => {
 </motion.div>
 
 {/* BUTTON */}
+{/* BUTTON */}
 <motion.div>
-  <button
+  <a
+    href="/resume.pdf"          // path to your PDF
+    download                    // triggers download
     className="
       inline-flex items-center gap-3 px-8 py-4
       bg-gradient-to-r from-blue-500 to-purple-500
@@ -161,8 +164,9 @@ const Hero = () => {
   >
     <HiDownload className="text-xl" />
     Download Resume
-  </button>
+  </a>
 </motion.div>
+
 
 </div>
 </section>
