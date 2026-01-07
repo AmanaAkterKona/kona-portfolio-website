@@ -26,62 +26,43 @@ const Navbar = () => {
   ];
 
   return (
-    <nav
-      className={`fixed w-full z-50 transition-all duration-300 ${
+    <motion.nav
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      transition={{ duration: 0.5 }}
+      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
         scrolled
-          ? "bg-[#020617]/80 backdrop-blur-lg border-b border-white/10 py-3"
-          : "bg-[#0a192f]/90 py-5"
+          ? "bg-gray-900/95 backdrop-blur-md shadow-lg"
+          : "bg-transparent"
       }`}
     >
-      <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
-        {/* Logo */}
-        <Link to="/">
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            whileHover={{ scale: 1.05 }}
-            className="flex items-center gap-4"
-          >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-20">
+          {/* Logo */}
+          <Link to="/" className="flex items-center space-x-3 group">
             {/* Logo Image */}
-            <img
-              src={logo}
-              alt="AA Kona Logo"
-              className={`rounded-full object-cover border border-white/30
-                shadow-[0_0_20px_rgba(124,58,237,0.55)]
-                transition-all duration-300
-                ${scrolled ? "w-9 h-9" : "w-11 h-11"}
-              `}
-            />
-
+            <div className="relative">
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full blur-md opacity-50 group-hover:opacity-75 transition-opacity"></div>
+              <img
+                src={logo}
+                alt="AA Kona"
+                className="relative h-12 w-12 rounded-full object-cover border-2 border-blue-400 group-hover:scale-110 transition-transform"
+              />
+            </div>
             {/* Name & Title */}
-            <div className="leading-tight">
-              <h1
-                className="
-                  text-2xl font-extrabold tracking-wide
-                  bg-gradient-to-r from-white via-blue-400 to-purple-500
-                  bg-clip-text text-transparent
-                  drop-shadow-[0_0_14px_rgba(99,102,241,0.6)]
-                "
-              >
+            <div className="hidden sm:block">
+              <h1 className="text-xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
                 AA Kona
               </h1>
-              <p className="text-xs text-blue-300 tracking-wide">
-                MERN Stack Developer
-              </p>
+              <p className="text-xs text-gray-400">MERN Stack Developer</p>
             </div>
-          </motion.div>
-        </Link>
+          </Link>
 
-        {/* Desktop Menu */}
-        <div className="hidden md:flex items-center gap-8">
-          {navLinks.map((link, index) => (
-            <motion.div
-              key={link.name}
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1 }}
-            >
+          {/* Desktop Menu */}
+          <div className="hidden md:flex items-center space-x-8">
+            {navLinks.map((link, index) => (
               <NavLink
+                key={index}
                 to={link.path}
                 className={({ isActive }) =>
                   `text-sm font-medium relative group transition-colors ${
@@ -92,80 +73,89 @@ const Navbar = () => {
                 }
               >
                 {link.name}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-500 transition-all group-hover:w-full"></span>
+                <span className="absolute left-0 bottom-[-4px] w-0 h-0.5 bg-gradient-to-r from-blue-400 to-purple-500 group-hover:w-full transition-all duration-300"></span>
               </NavLink>
-            </motion.div>
-          ))}
+            ))}
 
-          {/* Resume Button (Desktop) */}
-          <motion.a
-            href="/resume.pdf"
-            download // <- THIS makes it download
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="px-5 py-2 bg-blue-600/10 border border-blue-500/50 text-blue-400 rounded-lg text-sm font-semibold hover:bg-blue-600 hover:text-white transition-all"
+            {/* Resume Button (Desktop) */}
+            <a
+              href="/resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-5 py-2 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full text-white font-semibold shadow-lg hover:shadow-2xl hover:scale-105 transition-all"
+            >
+              Resume
+            </a>
+          </div>
+
+          {/* Mobile Menu Icon */}
+          <button
+            className="md:hidden text-gray-300 hover:text-blue-400 transition-colors"
+            onClick={() => setIsOpen(true)}
           >
-            Resume
-          </motion.a>
-        </div>
-
-        {/* Mobile Menu Icon */}
-        <div
-          className="md:hidden text-3xl text-white cursor-pointer"
-          onClick={() => setIsOpen(true)}
-        >
-          <HiMenuAlt3 />
+            <HiMenuAlt3 size={28} />
+          </button>
         </div>
       </div>
 
       {/* Mobile Sidebar */}
       <AnimatePresence>
         {isOpen && (
-          <motion.div
-            initial={{ x: "100%" }}
-            animate={{ x: 0 }}
-            exit={{ x: "100%" }}
-            transition={{ type: "spring", stiffness: 200, damping: 25 }}
-            className="fixed top-0 right-0 h-screen w-[70%] bg-[#0f172a] z-50 p-10 flex flex-col gap-8 md:hidden"
-          >
-            <div className="flex justify-end">
-              <HiX
-                className="text-3xl text-gray-400 cursor-pointer"
-                onClick={() => setIsOpen(false)}
-              />
-            </div>
-
-            {navLinks.map((link) => (
-              <NavLink
-                key={link.name}
-                to={link.path}
-                onClick={() => setIsOpen(false)}
-                className={({ isActive }) =>
-                  `text-xl font-semibold transition-colors ${
-                    isActive
-                      ? "text-blue-400"
-                      : "text-gray-300 hover:text-blue-400"
-                  }`
-                }
-              >
-                {link.name}
-              </NavLink>
-            ))}
-
-            {/* Resume Button (Mobile) */}
-            <motion.a
-              href="/resume.pdf"
-              download // <- triggers download
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="mt-6 px-6 py-3 bg-blue-600 text-white rounded-xl font-bold text-center"
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40"
+              onClick={() => setIsOpen(false)}
+            />
+            <motion.div
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ type: "tween", duration: 0.3 }}
+              className="fixed top-0 right-0 h-full w-72 bg-gradient-to-b from-gray-900 to-gray-800 shadow-2xl z-50 p-8"
             >
-              Download CV
-            </motion.a>
-          </motion.div>
+              <button
+                className="absolute top-6 right-6 text-gray-300 hover:text-blue-400 transition-colors"
+                onClick={() => setIsOpen(false)}
+              >
+                <HiX size={28} />
+              </button>
+
+              <div className="flex flex-col space-y-6 mt-16">
+                {navLinks.map((link) => (
+                  <NavLink
+                    key={link.name}
+                    to={link.path}
+                    onClick={() => setIsOpen(false)}
+                    className={({ isActive }) =>
+                      `text-xl font-semibold transition-colors ${
+                        isActive
+                          ? "text-blue-400"
+                          : "text-gray-300 hover:text-blue-400"
+                      }`
+                    }
+                  >
+                    {link.name}
+                  </NavLink>
+                ))}
+
+                {/* Resume Button (Mobile) */}
+                <a
+                  href="/resume.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full text-center px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full text-white font-semibold shadow-lg hover:shadow-2xl transition-all"
+                >
+                  Download CV
+                </a>
+              </div>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
-    </nav>
+    </motion.nav>
   );
 };
 
