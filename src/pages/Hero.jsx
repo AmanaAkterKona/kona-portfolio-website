@@ -16,7 +16,7 @@ const Hero = () => {
           backgroundImage: `url(${bgImg})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
-          filter: 'blur(45px)',
+          filter: 'blur(30px)',
           opacity: 0.18,
         }}
       />
@@ -81,7 +81,7 @@ const Hero = () => {
         <motion.p
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-sm tracking-[0.3em] text-blue-400 font-bold mb-4"
+          className="text-l tracking-[0.3em] text-blue-400 font-extrabold mb-4"
         >
           HELLO, I’M
         </motion.p>

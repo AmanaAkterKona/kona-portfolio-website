@@ -5,11 +5,11 @@ import project1Img from "../assets/konaImg.jpg";
 import project2Img from "../assets/Screenshot_19.png";
 import project3Img from "../assets/Screenshot_20.png";
 import project4Img from "../assets/Screenshot_21.png";
-
+import portfolioImg from "../assets/Screenshot_22.png"
 const projectsData = [
   {
     name: "Portfolio Website",
-    image: project1Img,
+    image: portfolioImg,
     techStack: ["React", "TailwindCSS", "Framer Motion"],
     description: "A modern, responsive portfolio website showcasing my skills and projects.",
     liveLink: "",
