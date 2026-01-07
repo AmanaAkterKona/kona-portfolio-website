@@ -12,7 +12,7 @@ const projectsData = [
     image: portfolioImg,
     techStack: ["React", "TailwindCSS", "Framer Motion"],
     description: "A modern, responsive portfolio website showcasing my skills and projects.",
-    liveLink: "",
+    liveLink: "bespoke-banoffee-097600.netlify.app",
     githubLink: "https://github.com/AmanaAkterKona/kona-portfolio-website.git",
     challenges: "Learning Framer Motion animations and managing complex state.",
     improvements: "Plan to integrate a Headless CMS.",
