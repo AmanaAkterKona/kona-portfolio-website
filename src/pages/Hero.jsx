@@ -121,27 +121,48 @@ const Hero = () => {
           </motion.div>
 
           {/* ================= RIGHT IMAGE ================= */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.85 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1 }}
-            className="flex justify-center lg:justify-end"
-          >
-            <div className="relative">
-              <div className="absolute inset-0 rounded-full border-2 border-dashed border-purple-400/40 animate-spin-slow" />
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-500 to-purple-600 blur-3xl opacity-35 rounded-full" />
+          {/* ================= RIGHT IMAGE ================= */}
+<motion.div
+  initial={{ opacity: 0, scale: 0.85 }}
+  animate={{ opacity: 1, scale: 1 }}
+  transition={{ duration: 1 }}
+  className="flex justify-center lg:justify-end"
+>
+  <div className="relative">
+    {/* Rotating Outer Ring (Dashed) */}
+    <div className="absolute inset-0 rounded-full border-2 border-dashed border-purple-400/40 animate-spin-slow" />
+    
+    {/* Core Purple Glow Effect (ইমেজের পেছনে মেইন গ্লো) */}
+    <div className="absolute inset-[-10px] bg-purple-600/50 blur-[40px] rounded-full animate-pulse" />
+    <div className="absolute inset-[-2px] bg-gradient-to-r from-purple-500 to-blue-500 rounded-full blur-md opacity-75" />
 
-              <div className="relative w-80 h-80 md:w-96 md:h-96 lg:w-[420px] lg:h-[420px]
-                rounded-full overflow-hidden border-6 border-purple-400 
-                shadow-[0_0_80px_rgba(168,85,247,0.55)]">
-                <img src={profileImg} alt="Amana Akter Kona" className="w-full h-full object-cover" />
-              </div>
+    {/* Profile Image Container with Floating Motion */}
+    <motion.div 
+      animate={{
+        y: [0, -15, 0], // উপরে নিচে মুভ করবে
+      }}
+      transition={{
+        duration: 4,
+        repeat: Infinity,
+        ease: "easeInOut",
+      }}
+      className="relative w-80 h-80 md:w-96 md:h-96 lg:w-[420px] lg:h-[420px]
+        rounded-full overflow-hidden 
+        shadow-[0_0_50px_rgba(168,85,247,0.4)] z-10"
+    >
+      <img 
+        src={profileImg} 
+        alt="Amana Akter Kona" 
+        className="w-full h-full object-cover" 
+      />
+    </motion.div>
 
-              <span className="absolute bottom-4 right-0 px-4 py-2 text-sm rounded-full bg-black/70 border border-white/10 text-purple-300">
-                MERN Stack Developer
-              </span>
-            </div>
-          </motion.div>
+    {/* Floating Badge */}
+    <span className="absolute bottom-4 right-0 z-20 px-4 py-2 text-sm rounded-full bg-black/70 border border-white/10 text-purple-300 backdrop-blur-md">
+      MERN Stack Developer
+    </span>
+  </div>
+</motion.div>
 
         </div>
       </div>
