@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaExternalLinkAlt, FaGithub, FaTimes } from "react-icons/fa";
 import project1Img from "../assets/konaImg.jpg";
-import project2Img from "../assets/Screenshot_19.png";
+import project2Img from "../assets/Screenshot_28.png";
 import project3Img from "../assets/Screenshot_20.png";
 import project4Img from "../assets/Screenshot_21.png";
 import portfolioImg from "../assets/Screenshot_22.png"
+import projectGadgetTechImg from "../assets/Screenshot_35.png"
 const projectsData = [
   {
     name: "Portfolio Website",
@@ -59,22 +60,39 @@ const projectsData = [
     ]
   },
   {
-    name: "Kids Toys",
-    image: project4Img,
-    techStack: ["React", "Firebase", "TailwindCSS"],
-    description: "A playful e-commerce platform for kids toys.",
-    liveLink: "https://kids-toys-cute-projects.web.app",
-    githubLink: "https://github.com/AmanaAkterKona/kids-toys-cute-my-projects.git",
-    challenges: "Handling real-time data persistence.",
-    improvements: "Adding push notifications.",
-    duration: "2 Weeks",
-    role: "Full Stack Developer",
-    features: [
-      "Product catalog & cart system",
-      "Firebase authentication",
-      "Responsive for all devices"
-    ]
-  }
+  name: "Gadget Tech",
+  image: projectGadgetTechImg,
+  techStack: [
+    "Next.js 14",
+    "React",
+    "JavaScript",
+    "Tailwind CSS",
+    "Context API",
+    "REST API",
+    "Vercel"
+  ],
+  description:
+    "A modern full-featured e-commerce web application for gadgets with authentication, admin product management, and a smooth shopping experience.",
+  liveLink: "https://gadget-tech-two.vercel.app/",
+  githubLink: "https://github.com/AmanaAkterKona/gadget-tech.git",
+  challenges:
+    "Implementing cookie-based authentication with protected routes and managing global product state efficiently.",
+  improvements:
+    "Adding payment gateway integration, user profiles, order history, and wishlist functionality.",
+  duration: "3 Weeks",
+  role: "Full Stack Developer",
+  features: [
+    "Secure authentication with cookie-based sessions",
+    "Protected routes using Next.js middleware",
+    "Product listing with category filtering & search",
+    "Add, edit & delete products (admin only)",
+    "Responsive modern UI with animations",
+    "Shopping cart with quantity management",
+    "Toast notifications & loading skeletons",
+    "REST API with Next.js Route Handlers"
+  ]
+}
+
 ];
 
 const Projects = () => {
