@@ -14,12 +14,17 @@ export default {
 
       /* ================= ANIMATIONS ================= */
       animation: {
-        "spin-slow": "spinSlow 20s linear infinite",
+        "spin-slow": "spin-slow 8s linear infinite", // Updated to 8s as per your requirement
+        "spin-extra-slow": "spinSlow 20s linear infinite", // Keeping your original 20s version too
         shine: "shine 3s infinite",
         gradientSlow: "gradientSlow 6s linear infinite",
       },
 
       keyframes: {
+        "spin-slow": {
+          from: { transform: "rotate(0deg)" },
+          to: { transform: "rotate(360deg)" },
+        },
         spinSlow: {
           from: { transform: "rotate(0deg)" },
           to: { transform: "rotate(360deg)" },

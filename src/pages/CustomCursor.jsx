@@ -10,7 +10,7 @@ const CustomCursor = () => {
     const move = (e) => setPos({ x: e.clientX, y: e.clientY });
     const down = () => {
       setClick(true);
-      setTimeout(() => setClick(false), 160);
+      setTimeout(() => setClick(false), 120);
     };
 
     window.addEventListener("mousemove", move);
@@ -41,41 +41,101 @@ const CustomCursor = () => {
 
   return (
     <>
-      {/* Outer Soft Ring */}
+      {/* Animated Gradient Ring */}
       <motion.div
         className="fixed top-0 left-0 pointer-events-none z-[9999]"
         animate={{
-          x: pos.x - 26,
-          y: pos.y - 26,
-          scale: hover ? 1.5 : click ? 1.8 : 1,
-          opacity: 0.55,
+          x: pos.x - 20,
+          y: pos.y - 20,
+          scale: hover ? 1.8 : click ? 0.9 : 1,
         }}
-        transition={{ type: "spring", stiffness: 160, damping: 22 }}
+        transition={{ type: "spring", stiffness: 300, damping: 20 }}
+      >
+        <div className="relative w-10 h-10">
+          <div
+            className="
+              absolute inset-0 rounded-full
+              bg-gradient-to-tr from-violet-500 via-fuchsia-500 to-orange-400
+              opacity-40 blur-md
+              animate-pulse
+            "
+          />
+          <div
+            className="
+              absolute inset-[2px] rounded-full
+              border-2 border-transparent
+              bg-gradient-to-br from-cyan-400 via-blue-500 to-purple-600
+              bg-clip-border
+              opacity-60
+            "
+            style={{
+              WebkitMask:
+                "linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0)",
+              WebkitMaskComposite: "destination-out",
+              maskComposite: "exclude",
+            }}
+          />
+        </div>
+      </motion.div>
+
+      {/* Core Dot with Glow */}
+      <motion.div
+        className="fixed top-0 left-0 pointer-events-none z-[10000]"
+        animate={{
+          x: pos.x - 4,
+          y: pos.y - 4,
+          scale: click ? 0.5 : hover ? 1.6 : 1,
+        }}
+        transition={{ type: "spring", stiffness: 600, damping: 25 }}
+      >
+        <div className="relative">
+          <div
+            className="
+              w-2 h-2 rounded-full
+              bg-gradient-to-br from-white via-cyan-300 to-blue-500
+              shadow-[0_0_16px_rgba(34,211,238,0.8),0_0_8px_rgba(59,130,246,0.6)]
+            "
+          />
+          <div
+            className="
+              absolute inset-0 rounded-full
+              bg-white opacity-90 blur-[1px]
+            "
+          />
+        </div>
+      </motion.div>
+
+      {/* Trailing Particles */}
+      <motion.div
+        className="fixed top-0 left-0 pointer-events-none z-[9998]"
+        animate={{
+          x: pos.x - 1,
+          y: pos.y - 1,
+        }}
+        transition={{ type: "spring", stiffness: 80, damping: 15 }}
       >
         <div
           className="
-            w-14 h-14 rounded-full
-            bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500
-            blur-xl
+            w-0.5 h-0.5 rounded-full
+            bg-gradient-to-r from-pink-400 to-purple-500
+            opacity-70 blur-[2px]
           "
         />
       </motion.div>
 
-      {/* Inner Colorful Point */}
       <motion.div
-        className="fixed top-0 left-0 pointer-events-none z-[10000]"
+        className="fixed top-0 left-0 pointer-events-none z-[9998]"
         animate={{
-          x: pos.x - 6,
-          y: pos.y - 6,
-          scale: click ? 0.7 : hover ? 1.4 : 1,
+          x: pos.x - 1.5,
+          y: pos.y - 1.5,
         }}
-        transition={{ type: "spring", stiffness: 500, damping: 28 }}
+        transition={{ type: "spring", stiffness: 60, damping: 12 }}
       >
         <div
           className="
-            w-3 h-3 rounded-full
-            bg-gradient-to-br from-cyan-400 via-blue-500 to-purple-600
-            shadow-[0_0_12px_rgba(99,102,241,0.9)]
+            w-1 h-1 rounded-full
+            bg-gradient-to-r from-blue-400 to-cyan-500
+            opacity-50 blur-[3px]
           "
         />
       </motion.div>
