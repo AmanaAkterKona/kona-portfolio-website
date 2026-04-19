@@ -98,9 +98,7 @@ const Navbar = () => {
                   A.
                 </span>
               </span>
-              <span className="text-[9px] uppercase tracking-[0.28em] text-slate-300 font-semibold mt-[3px]">
-                MERN Developer
-              </span>
+              
             </div>
           </Link>
 

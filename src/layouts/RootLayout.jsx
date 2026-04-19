@@ -8,28 +8,16 @@ import Skills from '../pages/Skills';
 import Projects from '../pages/Projects';
 import Contact from '../pages/Contact';
 
-//service_03te4mi
 const RootLayout = () => {
   return (
     <div className="relative">
       <CustomCursor />
-      <Navbar /> {/* Navbar always on top */}
+      <Navbar /> 
 
-      <div>
-        <Outlet /> {/* এখানে প্রতিটি section আলাদা load হবে */}
-      </div>
-         <section id="about">
-          <About />
-        </section>
-          <section id="skills">
-          <Skills />
-        </section>
-        <section id="projects">
-          <Projects />
-        </section>
-        <section id="contact">
-          <Contact />
-        </section>
+      <main>
+        <Outlet /> {/* Ekhanei shudhu current route-er page dekhabe */}
+      </main>
+
       <Footer />
     </div>
   );

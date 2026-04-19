@@ -9,6 +9,10 @@ import { MdEmail } from "react-icons/md";
 
 // Assets
 import Hero from "../pages/Hero";
+import About from "../pages/About";
+import Skills from "../pages/Skills";
+import Projects from "../pages/Projects";
+import Contact from "../pages/Contact";
 
 const Home = () => {
   const [showSidebar, setShowSidebar] = useState(false);
@@ -100,6 +104,18 @@ const Home = () => {
         {/* Hero Section */}
         <Hero />
       </div>
+      <section id="about">
+          <About />
+        </section>
+          <section id="skills">
+          <Skills />
+        </section>
+        <section id="projects">
+          <Projects />
+        </section>
+        <section id="contact">
+          <Contact />
+        </section>
     </div>
   );
 };
