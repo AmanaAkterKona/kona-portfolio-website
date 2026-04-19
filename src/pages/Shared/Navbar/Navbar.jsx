@@ -1,185 +1,204 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link, NavLink } from "react-router-dom";
-import { 
-  HiMenuAlt3, 
-  HiX, 
-  HiOutlineHome, 
-  HiOutlineUser, 
-  HiOutlineBadgeCheck, 
-  HiOutlineBriefcase, 
-  HiOutlineMail 
+import {
+  HiMenuAlt3,
+  HiX,
+  HiOutlineHome,
+  HiOutlineUser,
+  HiOutlineBadgeCheck,
+  HiOutlineBriefcase,
+  HiOutlineMail,
 } from "react-icons/hi";
 import logo from "../../../assets/konaImg.jpg";
+
+/* ─── Colorful Code-Ring SVG Logo ─── */
+const CodeRingLogo = () => (
+  <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+    {/* Outer dashed color arcs */}
+    <circle cx="22" cy="22" r="19" stroke="none" fill="none" />
+
+    {/* Arc segments – top */}
+    <path d="M13 4.5 A19 19 0 0 1 22 3" stroke="#f97316" strokeWidth="3.2" strokeLinecap="round" fill="none"/>
+    <path d="M22 3 A19 19 0 0 1 31 4.5" stroke="#facc15" strokeWidth="3.2" strokeLinecap="round" fill="none"/>
+    <path d="M31 4.5 A19 19 0 0 1 39 11" stroke="#a855f7" strokeWidth="3.2" strokeLinecap="round" fill="none"/>
+
+    {/* Arc segments – right */}
+    <path d="M39.5 14 A19 19 0 0 1 41 22" stroke="#f97316" strokeWidth="3.2" strokeLinecap="round" fill="none"/>
+    <path d="M41 22 A19 19 0 0 1 39.5 30" stroke="#22d3ee" strokeWidth="3.2" strokeLinecap="round" fill="none"/>
+
+    {/* Arc segments – bottom */}
+    <path d="M38 32 A19 19 0 0 1 31 39.5" stroke="#a855f7" strokeWidth="3.2" strokeLinecap="round" fill="none"/>
+    <path d="M31 39.5 A19 19 0 0 1 22 41" stroke="#4ade80" strokeWidth="3.2" strokeLinecap="round" fill="none"/>
+    <path d="M22 41 A19 19 0 0 1 13 39.5" stroke="#f97316" strokeWidth="3.2" strokeLinecap="round" fill="none"/>
+
+    {/* Arc segments – left */}
+    <path d="M6 32 A19 19 0 0 1 3 22" stroke="#facc15" strokeWidth="3.2" strokeLinecap="round" fill="none"/>
+    <path d="M3 22 A19 19 0 0 1 6 12" stroke="#4ade80" strokeWidth="3.2" strokeLinecap="round" fill="none"/>
+    <path d="M6 12 A19 19 0 0 1 13 4.5" stroke="#22d3ee" strokeWidth="3.2" strokeLinecap="round" fill="none"/>
+
+    {/* Dots on arc joints */}
+    <circle cx="22" cy="3"  r="1.8" fill="#facc15"/>
+    <circle cx="41" cy="22" r="1.8" fill="#f97316"/>
+    <circle cx="22" cy="41" r="1.8" fill="#4ade80"/>
+    <circle cx="3"  cy="22" r="1.8" fill="#a855f7"/>
+
+    {/* Center </> symbol */}
+    {/* < */}
+    <path d="M16 19 L12 22 L16 25" stroke="#4ade80" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
+    {/* > */}
+    <path d="M28 19 L32 22 L28 25" stroke="#4ade80" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
+    {/* / */}
+    <path d="M20.5 26 L23.5 18" stroke="#f97316" strokeWidth="2.4" strokeLinecap="round" fill="none"/>
+  </svg>
+);
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
-    };
+    const handleScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const navLinks = [
-    { name: "Home", path: "/", icon: <HiOutlineHome size={22} /> },
-    { name: "About", path: "/about", icon: <HiOutlineUser size={22} /> },
-    { name: "Skills", path: "/skills", icon: <HiOutlineBadgeCheck size={22} /> },
-    { name: "Projects", path: "/projects", icon: <HiOutlineBriefcase size={22} /> },
-    { name: "Contact", path: "/contact", icon: <HiOutlineMail size={22} /> },
+    { name: "Home",     path: "/",         icon: <HiOutlineHome size={17} /> },
+    { name: "About",    path: "/about",    icon: <HiOutlineUser size={17} /> },
+    { name: "Skills",   path: "/skills",   icon: <HiOutlineBadgeCheck size={17} /> },
+    { name: "Projects", path: "/projects", icon: <HiOutlineBriefcase size={17} /> },
+    { name: "Contact",  path: "/contact",  icon: <HiOutlineMail size={17} /> },
   ];
 
   return (
     <motion.nav
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.5 }}
-      // Ageer background colors ekhane back kora hoyeche
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
+      initial={{ y: -80, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.55, ease: "easeOut" }}
+      className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
         scrolled
-          ? "bg-gradient-to-r from-[#0f172a]/95 via-[#020617]/95 to-[#0b1220]/95 backdrop-blur-xl border-b border-white/10 shadow-[0_8px_30px_rgba(0,0,0,0.6)]"
-          : "bg-gradient-to-r from-slate-800/90 via-slate-900/90 to-slate-800/90 backdrop-blur-xl border-b border-white/10 shadow-[0_8px_30px_rgba(0,0,0,0.4)]"
+          ? "bg-[#060818]/85 backdrop-blur-2xl border-b border-white/[0.07] shadow-[0_4px_40px_rgba(0,0,0,0.6)]"
+          : "bg-[#060818]/50 backdrop-blur-xl border-b border-white/[0.04]"
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-20">
-          {/* Logo Section */}
-       {/* --- Futuristic & Colorful Logo Section --- */}
-          <Link to="/" className="flex items-center space-x-4 group">
-            <div className="relative">
-              {/* Neon Orbit Ring */}
-              <div className="absolute inset-[-6px] rounded-full border border-white/10 group-hover:border-blue-500/50 transition-all duration-700"></div>
-              <div className="absolute inset-[-6px] rounded-full border-t-2 border-b-2 border-purple-500 animate-spin-slow opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-              
-              {/* Glass Sphere / Image Container */}
-              <div className="relative h-14 w-14 rounded-full p-[2px] bg-gradient-to-br from-[#ff2975] via-[#00d9ff] to-[#bc18ff] shadow-[0_0_20px_rgba(0,217,255,0.4)]">
-                <div className="h-full w-full rounded-full overflow-hidden border-[3px] border-[#020617] relative">
-                  <img
-                    src={logo}
-                    alt="AA Kona"
-                    className="h-full w-full object-cover group-hover:scale-110 transition-transform duration-700"
-                  />
-                  {/* Glass Reflection Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-tr from-white/10 to-transparent opacity-50"></div>
-                </div>
-              </div>
+      <div className="max-w-7xl mx-auto px-6 lg:px-12">
+        <div className="flex items-center justify-between h-[70px]">
 
-              {/* Status Indicator with Pulse */}
-              <div className="absolute bottom-1 right-1 flex h-4 w-4">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-4 w-4 bg-green-500 border-2 border-[#020617]"></span>
-              </div>
-            </div>
+          {/* ── LEFT: Logo ── */}
+          <Link to="/" className="flex items-center gap-3 group shrink-0">
+            <motion.div whileHover={{ rotate: 20, scale: 1.1 }} transition={{ type: "spring", stiffness: 200 }}>
+              <CodeRingLogo />
+            </motion.div>
 
-            <div className="hidden sm:block">
-              <div className="flex flex-col">
-                <h1 className="text-3xl flex items-center leading-none group">
-                  {/* AA - Minimalist Thin Style */}
-                  <span className="font-light tracking-tighter text-white/90 group-hover:text-blue-400 transition-colors duration-500">
-                    AA
-                  </span>
-                  
-                  {/* Elegant Thin Slash instead of Dot */}
-                  <span className="text-slate-500 font-thin mx-1 rotate-[20deg] h-8 w-[1px] bg-slate-700 block"></span>
-                  
-                  {/* Kona - Bold & Vibrant Gradient */}
-                  <span className="font-black tracking-tight bg-gradient-to-br from-white via-blue-100 to-blue-500 bg-clip-text text-transparent drop-shadow-sm">
-                    Kona
-                  </span>
-                </h1>
-
-                {/* Tagline with Futuristic Accent */}
-                <div className="flex items-center gap-2 mt-1">
-                   <div className="h-[2px] w-8 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full"></div>
-                   <p className="text-[10px] uppercase tracking-[0.25em] font-extrabold bg-gradient-to-r from-blue-300 to-slate-400 bg-clip-text text-transparent">
-                    MERN Architect
-                  </p>
-                </div>
-              </div>
+            <div className="flex flex-col leading-none">
+              <span className="text-[17px] font-black tracking-tight text-white">
+                Amana
+                <span className="bg-gradient-to-r from-orange-400 via-fuchsia-400 to-cyan-400 bg-clip-text text-transparent ml-1">
+                  A.
+                </span>
+              </span>
+              <span className="text-[9px] uppercase tracking-[0.28em] text-slate-300 font-semibold mt-[3px]">
+                MERN Developer
+              </span>
             </div>
           </Link>
 
-          {/* Desktop Menu */}
-          <div className="hidden md:flex items-center space-x-8">
-            {navLinks.map((link, index) => (
-              <NavLink
-                key={index}
-                to={link.path}
-                className={({ isActive }) =>
-                  `text-[15px] font-medium tracking-wide flex items-center gap-2 transition-all duration-300 relative group ${
-                    isActive ? "text-blue-400" : "text-gray-300 hover:text-blue-400"
-                  }`
-                }
-              >
-                {/* Fixed size 22 icons */}
-                <span className="opacity-80 group-hover:scale-110 transition-transform">{link.icon}</span>
-                {link.name}
-                <span className="absolute left-0 bottom-[-4px] w-0 h-0.5 bg-gradient-to-r from-blue-400 to-purple-500 group-hover:w-full transition-all duration-300"></span>
-              </NavLink>
-            ))}
+          {/* ── CENTER: Pill Nav ── */}
+          <div className="hidden md:flex items-center">
+            <div className="flex items-center gap-[3px] px-[6px] py-[6px] rounded-full bg-white/[0.03] border border-white/[0.07] backdrop-blur-md">
+              {navLinks.map((link, i) => (
+                <NavLink
+                  key={i}
+                  to={link.path}
+                  className={({ isActive }) =>
+                    `flex items-center gap-[7px] px-4 py-[7px] rounded-full text-[12.5px] font-semibold tracking-wide transition-all duration-300 ${
+                      isActive
+                        ? "bg-white/10 text-white border border-white/20"
+                        : "text-slate-400 hover:text-white hover:bg-white/[0.05]"
+                    }`
+                  }
+                >
+                  {link.icon}
+                  {link.name}
+                </NavLink>
+              ))}
+            </div>
+          </div>
 
+          {/* ── RIGHT: Resume only ── */}
+          <div className="hidden md:flex items-center shrink-0">
             <a
               href="/resume.pdf"
               download="Amana_Akter_Resume.pdf"
-              className="px-6 py-2 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full text-white font-semibold shadow-lg hover:shadow-2xl hover:scale-105 transition-all"
+              className="relative px-6 py-[9px] rounded-full text-[11.5px] font-bold uppercase tracking-[0.18em] text-white overflow-hidden group"
             >
-              Resume
+              {/* gradient border via pseudo */}
+              <span className="absolute inset-0 rounded-full bg-gradient-to-r from-orange-500 via-fuchsia-500 to-cyan-500 opacity-80 group-hover:opacity-100 transition-opacity duration-300" />
+              <span className="absolute inset-[1.5px] rounded-full bg-[#060818]" />
+              <span className="relative z-10 bg-gradient-to-r from-orange-400 via-fuchsia-400 to-cyan-400 bg-clip-text text-transparent group-hover:from-white group-hover:via-white group-hover:to-white transition-all duration-300">
+                Resume
+              </span>
             </a>
           </div>
 
-          {/* Mobile Menu Icon */}
+          {/* ── Mobile hamburger ── */}
           <button
-            className="md:hidden text-gray-300 hover:text-blue-400 transition-colors"
+            className="md:hidden text-slate-400 hover:text-orange-400 transition-colors"
             onClick={() => setIsOpen(true)}
           >
-            <HiMenuAlt3 size={30} />
+            <HiMenuAlt3 size={26} />
           </button>
         </div>
       </div>
 
-      {/* Mobile Sidebar */}
+      {/* ── Mobile Sidebar ── */}
       <AnimatePresence>
         {isOpen && (
           <>
             <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40"
+              initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+              className="fixed inset-0 bg-black/70 backdrop-blur-sm z-40"
               onClick={() => setIsOpen(false)}
             />
             <motion.div
-              initial={{ x: "100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "100%" }}
-              transition={{ type: "tween", duration: 0.3 }}
-              className="fixed top-0 right-0 h-full w-72 bg-gradient-to-b from-[#020617] via-[#020617] to-[#0f172a] shadow-2xl z-50 p-8 border-l border-white/10"
+              initial={{ x: "100%" }} animate={{ x: 0 }} exit={{ x: "100%" }}
+              transition={{ type: "tween", duration: 0.28 }}
+              className="fixed top-0 right-0 h-full w-68 bg-[#060818] border-l border-white/[0.07] shadow-2xl z-50 p-8"
             >
               <button
-                className="absolute top-6 right-6 text-gray-300 hover:text-blue-400 transition-colors"
+                className="absolute top-6 right-6 text-slate-400 hover:text-orange-400 transition-colors"
                 onClick={() => setIsOpen(false)}
               >
-                <HiX size={30} />
+                <HiX size={24} />
               </button>
 
-              <div className="flex flex-col space-y-7 mt-16">
+              {/* Mobile logo */}
+              <div className="flex items-center gap-3 mb-10 mt-1">
+                <CodeRingLogo />
+                <div>
+                  <p className="text-white font-black text-[15px]">
+                    Amana <span className="bg-gradient-to-r from-orange-400 to-cyan-400 bg-clip-text text-transparent">A.</span>
+                  </p>
+                  <p className="text-[9px] text-slate-500 uppercase tracking-[0.25em]">MERN Developer</p>
+                </div>
+              </div>
+
+              <div className="flex flex-col gap-1">
                 {navLinks.map((link) => (
                   <NavLink
                     key={link.name}
                     to={link.path}
                     onClick={() => setIsOpen(false)}
                     className={({ isActive }) =>
-                      `text-lg font-semibold flex items-center gap-4 transition-colors ${
-                        isActive ? "text-blue-400" : "text-gray-300 hover:text-blue-400"
+                      `flex items-center gap-3 px-4 py-3 rounded-xl text-[13px] font-semibold transition-all duration-300 ${
+                        isActive
+                          ? "bg-white/10 text-white border border-white/15"
+                          : "text-slate-400 hover:text-white hover:bg-white/[0.04]"
                       }`
                     }
                   >
-                    <span className={({ isActive }) => isActive ? "text-blue-400" : "text-gray-400"}>
-                      {link.icon}
-                    </span>
+                    {link.icon}
                     {link.name}
                   </NavLink>
                 ))}
@@ -187,9 +206,10 @@ const Navbar = () => {
                 <a
                   href="/resume.pdf"
                   download="Amana_Akter_Resume.pdf"
-                  className="w-full text-center px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full text-white font-semibold shadow-lg hover:shadow-2xl transition-all"
+                  className="mt-5 text-center px-6 py-3 rounded-full text-[12px] font-bold uppercase tracking-widest text-white relative overflow-hidden group"
                 >
-                  Download CV
+                  <span className="absolute inset-0 bg-gradient-to-r from-orange-500 via-fuchsia-500 to-cyan-500 opacity-90 group-hover:opacity-100 transition-opacity" />
+                  <span className="relative z-10">Download CV</span>
                 </a>
               </div>
             </motion.div>
