@@ -1,194 +1,317 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-  FaCode, FaReact, FaJs, FaHtml5, FaCss3Alt,
-  FaNodeJs, FaGithub, FaFigma, FaPaperPlane, FaTools
+  FaCode, FaReact, FaJs, FaHtml5,
+  FaNodeJs, FaGithub, FaFigma, FaPaperPlane, FaTools, FaTrophy, FaExternalLinkAlt
 } from 'react-icons/fa';
-import { SiTailwindcss, SiMongodb, SiTypescript, SiNextdotjs, SiExpress } from "react-icons/si";
+import { SiTailwindcss, SiMongodb, SiTypescript, SiNextdotjs, SiExpress } from 'react-icons/si';
+import { HiAcademicCap } from 'react-icons/hi';
 
 const skillsData = [
-  { name: 'React',       level: 92, desc: 'Hooks, Context, Redux',      icon: <FaReact />,       category: 'Frontend', color: '#61dafb' },
-  { name: 'Tailwind',    level: 90, desc: 'Config, Plugins, DaisyUI',   icon: <SiTailwindcss />, category: 'Frontend', color: '#38bdf8' },
-  { name: 'JavaScript',  level: 85, desc: 'ES6+, Async/Await, DOM',     icon: <FaJs />,          category: 'Frontend', color: '#f7df1e' },
-  { name: 'TypeScript',  level: 75, desc: 'Types, Interfaces, Generics',icon: <SiTypescript />,  category: 'Frontend', color: '#3178c6' },
-  { name: 'HTML / CSS',  level: 98, desc: 'Semantic, Responsive, Grid', icon: <FaHtml5 />,       category: 'Frontend', color: '#f97316' },
-  { name: 'Next.js',     level: 70, desc: 'SSR, SSG, App Router',       icon: <SiNextdotjs />,   category: 'Frontend', color: '#fff' },
-  { name: 'Node.js',     level: 72, desc: 'Express, REST API',          icon: <FaNodeJs />,      category: 'Backend',  color: '#6cc24a' },
-  { name: 'MongoDB',     level: 68, desc: 'Mongoose, CRUD, Aggregation',icon: <SiMongodb />,     category: 'Backend',  color: '#47a248' },
-  { name: 'Express.js',  level: 70, desc: 'Middleware, Auth, Routing',  icon: <SiExpress />,     category: 'Backend',  color: '#ccc' },
+  { name: 'React',      level: 92, icon: <FaReact />,       color: '#61dafb' },
+  { name: 'Tailwind',   level: 90, icon: <SiTailwindcss />, color: '#38bdf8' },
+  { name: 'JavaScript', level: 85, icon: <FaJs />,          color: '#f7df1e' },
+  { name: 'TypeScript', level: 75, icon: <SiTypescript />,  color: '#3178c6' },
+  { name: 'HTML / CSS', level: 98, icon: <FaHtml5 />,       color: '#f97316' },
+  { name: 'Next.js',    level: 70, icon: <SiNextdotjs />,   color: '#ffffff' },
+  { name: 'Node.js',    level: 72, icon: <FaNodeJs />,      color: '#6cc24a' },
+  { name: 'MongoDB',    level: 68, icon: <SiMongodb />,     color: '#47a248' },
+  { name: 'Express.js', level: 70, icon: <SiExpress />,     color: '#cccccc' },
 ];
 
-const tools = [
-  { name: 'Git & GitHub', icon: <FaGithub />,     color: '#fff' },
-  { name: 'Figma',        icon: <FaFigma />,       color: '#e85c5c' },
-  { name: 'VS Code',      icon: <FaCode />,        color: '#38bdf8' },
-  { name: 'Postman',      icon: <FaPaperPlane />,  color: '#f97316' },
-  { name: 'Workflow',     icon: <FaTools />,       color: '#e8175d' },
+const toolsData = [
+  { name: 'Git & GitHub', icon: <FaGithub />,    color: '#ffffff' },
+  { name: 'Figma',        icon: <FaFigma />,      color: '#e85c5c' },
+  { name: 'VS Code',      icon: <FaCode />,       color: '#38bdf8' },
+  { name: 'Postman',      icon: <FaPaperPlane />, color: '#f97316' },
+  { name: 'Workflow',     icon: <FaTools />,      color: '#e8175d' },
 ];
 
-const CATS = ['All', 'Frontend', 'Backend', 'Tools'];
+const educationData = [
+  {
+    id: 1,
+    title: 'HSC — Science',
+    institution: 'Shafipur Ideal Public College',
+    year: '2020 - 2022',
+    description: 'Higher Secondary Certificate in Science group with a strong foundation in Physics, Chemistry and Mathematics.',
+    certificateUrl: null,
+    certificateLabel: 'View Certificate',
+  },
+  {
+    id: 2,
+    title: 'Complete Web Development',
+    institution: 'Programming Hero',
+    year: '6 Months · 2025',
+    description: 'Intensive full-stack bootcamp covering React, Node.js, MongoDB, Express and modern frontend development.',
+    certificateUrl: 'https://drive.google.com/file/d/102QoV_TtdP8ZUfTm-r5O56gBG1i1Coe4/view?usp=sharing',
+    certificateLabel: 'View Certificate',
+  },
+  {
+    id: 3,
+    title: 'Recommendation Letter',
+    institution: 'Programming Hero',
+    year: 'End Game · Best Score',
+    description: 'Earned a recommendation letter by achieving the best score in the End Game — the final milestone of the course.',
+    certificateUrl: 'https://drive.google.com/file/d/1jimNuMYjH9KDlspop_uLxnYHFZ7yRI8B/view?usp=sharing',
+    certificateLabel: 'View Letter',
+  },
+];
+
+const CATS = [
+  { label: 'Skills',    num: '01' },
+  { label: 'Tools',     num: '02' },
+  { label: 'Education', num: '03' },
+];
 
 const Skills = () => {
-  const [active, setActive] = useState('All');
-
-  const filtered = active === 'All' || active === 'Tools'
-    ? skillsData
-    : skillsData.filter(s => s.category === active);
+  const [active, setActive] = useState('Skills');
+  const [toolHover, setToolHover] = useState(null);
 
   return (
     <section
-      className="relative min-h-screen w-full py-24 px-6 md:px-16 lg:px-24 overflow-hidden"
-      style={{ background: "linear-gradient(135deg, #060e22 0%, #0a1628 50%, #0d1b38 100%)" }}
+      className="relative w-full min-h-screen flex flex-col items-center py-20 px-6 overflow-hidden"
+      style={{ background: 'linear-gradient(135deg, #060e22 0%, #0a1628 50%, #0d1b38 100%)' }}
     >
-      {/* Background glow */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[400px] rounded-full pointer-events-none opacity-10"
-        style={{ background: "radial-gradient(ellipse, rgba(232,23,93,0.5) 0%, transparent 70%)" }} />
+      {/* bg glows */}
+      <div className="absolute bottom-0 left-1/4 w-[700px] h-[400px] rounded-full pointer-events-none opacity-20"
+        style={{ background: 'radial-gradient(ellipse, rgba(232,23,93,0.5) 0%, transparent 70%)' }} />
+      <div className="absolute top-20 right-1/4 w-[500px] h-[300px] rounded-full pointer-events-none opacity-10"
+        style={{ background: 'radial-gradient(ellipse, rgba(56,189,248,0.4) 0%, transparent 70%)' }} />
 
-      <div className="max-w-6xl mx-auto relative z-10">
+      {/* max-w-6xl — wider */}
+      <div className="w-full max-w-6xl flex flex-col items-center relative z-10">
 
-        {/* ── Header ── */}
+        {/* ── Tab ── */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: -16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-14"
+          transition={{ duration: 0.5 }}
+          className="flex items-center rounded-full relative z-20"
+          style={{
+            background: 'rgba(8,16,34,0.98)',
+            border: '1px solid rgba(255,255,255,0.1)',
+            padding: '6px',
+            marginBottom: '-24px',
+            boxShadow: '0 4px 32px rgba(0,0,0,0.5)',
+          }}
         >
-          <p className="font-bold tracking-[0.4em] uppercase text-xs mb-3">
-            <span style={{ color: "#6ec6f5" }}>WHAT I </span>
-            <span style={{ color: "#e8175d" }}>WORK WITH</span>
-          </p>
-          <h1 className="text-4xl md:text-5xl font-black text-white mb-4"
-            style={{ fontFamily: "'Syne', sans-serif" }}>
-            My Arsenal
-          </h1>
-          <div className="mx-auto mb-5" style={{ width: "44px", height: "3px", background: "#e8175d", borderRadius: "2px" }} />
-          <p style={{ color: "rgba(148,163,184,0.7)", fontSize: "15px" }}>
-            Technologies I use to bring modern products to life.
-          </p>
+          {CATS.map(({ label, num }) => (
+            <button
+              key={label}
+              onClick={() => setActive(label)}
+              className="flex items-center gap-3 px-8 py-[11px] rounded-full font-black tracking-[0.2em] uppercase transition-all duration-300"
+              style={{
+                fontSize: '13px',
+                background: active === label ? 'linear-gradient(90deg, #e8175d, #c0143c)' : 'transparent',
+                color: active === label ? '#fff' : 'rgba(148,163,184,0.55)',
+              }}
+            >
+              <span>{label}</span>
+              <span
+                className="flex items-center justify-center w-7 h-7 rounded-full font-black"
+                style={{
+                  fontSize: '11px',
+                  background: active === label ? 'rgba(255,255,255,0.22)' : 'rgba(255,255,255,0.05)',
+                  color: active === label ? '#fff' : 'rgba(148,163,184,0.4)',
+                }}
+              >
+                {num}
+              </span>
+            </button>
+          ))}
         </motion.div>
 
-        {/* ── Filter Tabs ── */}
-        <div className="flex justify-center mb-12">
-          <div
-            className="flex rounded-2xl overflow-hidden"
-            style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)" }}
-          >
-            {CATS.map((cat) => (
-              <button key={cat} onClick={() => setActive(cat)}
-                className="px-7 py-3 text-sm font-black tracking-widest transition-all duration-300"
-                style={{
-                  color: active === cat ? "#fff" : "rgba(148,163,184,0.6)",
-                  background: active === cat ? "linear-gradient(90deg, #e8175d, #c0143c)" : "transparent",
-                }}>
-                {cat}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* ── Skills Grid ── */}
-        <AnimatePresence mode="wait">
-          {active !== 'Tools' && (
+        {/* ── Card ── */}
+        <div
+          className="w-full rounded-2xl"
+          style={{
+            background: 'rgba(7,15,32,0.92)',
+            border: '1px solid rgba(255,255,255,0.07)',
+            boxShadow: '0 8px 48px rgba(0,0,0,0.4)',
+          }}
+        >
+          <AnimatePresence mode="wait">
             <motion.div
               key={active}
-              initial={{ opacity: 0, y: 16 }}
+              initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
+              exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.3 }}
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mb-12"
+              style={{ padding: '56px 64px 52px' }}
             >
-              {filtered.map((skill, i) => (
-                <motion.div
-                  key={skill.name}
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: i * 0.06 }}
-                  whileHover={{ y: -5 }}
-                  className="group p-6 rounded-2xl transition-all duration-300 cursor-default"
-                  style={{
-                    background: "rgba(255,255,255,0.03)",
-                    border: "1px solid rgba(255,255,255,0.07)",
-                  }}
-                  onMouseEnter={e => e.currentTarget.style.borderColor = "rgba(232,23,93,0.3)"}
-                  onMouseLeave={e => e.currentTarget.style.borderColor = "rgba(255,255,255,0.07)"}
-                >
-                  {/* Icon + level */}
-                  <div className="flex justify-between items-start mb-5">
-                    <div
-                      className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl transition-all duration-300"
-                      style={{ background: `${skill.color}18`, color: skill.color, border: `1px solid ${skill.color}33` }}
-                    >
-                      {skill.icon}
-                    </div>
-                    <span style={{ color: "rgba(148,163,184,0.5)", fontFamily: "monospace", fontSize: "13px" }}>
-                      {skill.level}%
-                    </span>
-                  </div>
 
-                  <h3 className="text-white font-black mb-1 tracking-tight">{skill.name}</h3>
-                  <p style={{ color: "rgba(148,163,184,0.55)", fontSize: "13px", marginBottom: "16px" }}>{skill.desc}</p>
-
-                  {/* Progress bar */}
-                  <div className="h-[4px] w-full rounded-full overflow-hidden"
-                    style={{ background: "rgba(255,255,255,0.07)" }}>
+              {/* ── 01 Skills ── */}
+              {active === 'Skills' && (
+                <div className="flex flex-col gap-6">
+                  <p className="text-xs font-black tracking-[0.35em] uppercase mb-2" style={{ color: '#e8175d' }}>
+                    Skills
+                  </p>
+                  {skillsData.map((skill, i) => (
                     <motion.div
-                      initial={{ width: 0 }}
-                      whileInView={{ width: `${skill.level}%` }}
-                      transition={{ duration: 1.2, delay: 0.2, ease: "easeOut" }}
-                      viewport={{ once: true }}
-                      className="h-full rounded-full"
-                      style={{ background: `linear-gradient(90deg, ${skill.color}, #e8175d)` }}
-                    />
+                      key={skill.name}
+                      initial={{ opacity: 0, x: -16 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: i * 0.055 }}
+                      className="flex items-center gap-6"
+                    >
+                      <div
+                        className="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0"
+                        style={{
+                          fontSize: '20px',
+                          background: `linear-gradient(135deg, ${skill.color}28, ${skill.color}0d)`,
+                          border: `1.5px solid ${skill.color}44`,
+                          color: skill.color,
+                        }}
+                      >
+                        {skill.icon}
+                      </div>
+                      <span className="font-black text-white flex-shrink-0"
+                        style={{ fontSize: '16px', width: '145px', letterSpacing: '0.02em' }}>
+                        {skill.name}
+                      </span>
+                      <span className="font-black flex-shrink-0 text-right"
+                        style={{ color: '#fff', fontSize: '19px', fontFamily: 'monospace', width: '58px' }}>
+                        {skill.level}%
+                      </span>
+                      <div className="flex-1 h-[6px] rounded-full overflow-hidden"
+                        style={{ background: 'rgba(255,255,255,0.06)' }}>
+                        <motion.div
+                          initial={{ width: 0 }}
+                          whileInView={{ width: `${skill.level}%` }}
+                          transition={{ duration: 1.1, delay: 0.1 + i * 0.055, ease: 'easeOut' }}
+                          viewport={{ once: true }}
+                          className="h-full rounded-full"
+                          style={{
+                            background: 'linear-gradient(90deg, #e8175d 55%, rgba(232,23,93,0.25) 100%)',
+                            boxShadow: '0 0 10px rgba(232,23,93,0.45)',
+                          }}
+                        />
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+              )}
+
+              {/* ── 02 Tools — grid card style like reference ── */}
+              {active === 'Tools' && (
+                <div>
+                  <p className="text-xs font-black tracking-[0.35em] uppercase mb-8" style={{ color: '#e8175d' }}>
+                    Tools & Workflow
+                  </p>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {toolsData.map((tool, i) => (
+                      <motion.div
+                        key={tool.name}
+                        initial={{ opacity: 0, y: 14 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: i * 0.08 }}
+                        onMouseEnter={() => setToolHover(i)}
+                        onMouseLeave={() => setToolHover(null)}
+                        className="flex items-center gap-4 px-6 py-5 rounded-xl transition-all duration-300 cursor-default"
+                        style={{
+                          background: toolHover === i
+                            ? `linear-gradient(135deg, ${tool.color}12, rgba(7,15,32,0.9))`
+                            : 'rgba(255,255,255,0.03)',
+                          border: `1px solid ${toolHover === i ? tool.color + '44' : 'rgba(255,255,255,0.08)'}`,
+                          transform: toolHover === i ? 'translateY(-3px)' : 'translateY(0)',
+                          boxShadow: toolHover === i ? `0 8px 24px ${tool.color}18` : 'none',
+                        }}
+                      >
+                        {/* Icon circle */}
+                        <div
+                          className="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0"
+                          style={{
+                            fontSize: '20px',
+                            background: `linear-gradient(135deg, ${tool.color}28, ${tool.color}0d)`,
+                            border: `1.5px solid ${tool.color}55`,
+                            color: tool.color,
+                          }}
+                        >
+                          {tool.icon}
+                        </div>
+
+                        {/* Name */}
+                        <span className="font-black text-white" style={{ fontSize: '16px', letterSpacing: '0.01em' }}>
+                          {tool.name}
+                        </span>
+                      </motion.div>
+                    ))}
                   </div>
-                </motion.div>
-              ))}
+                </div>
+              )}
+
+              {/* ── 03 Education ── */}
+              {active === 'Education' && (
+                <div>
+                  <p className="text-xs font-black tracking-[0.35em] uppercase mb-8" style={{ color: '#e8175d' }}>
+                    Education & Achievements
+                  </p>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-x-14 gap-y-10">
+                    {educationData.map((item, i) => (
+                      <motion.div
+                        key={item.id}
+                        initial={{ opacity: 0, y: 16 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: i * 0.1 }}
+                        className="flex gap-5"
+                      >
+                        {/* circle dot + line */}
+                        <div className="flex flex-col items-center flex-shrink-0">
+                          <div
+                            className="w-4 h-4 rounded-full border-2 mt-1 flex-shrink-0"
+                            style={{ borderColor: '#e8175d', background: 'transparent' }}
+                          />
+                          <div
+                            className="flex-1 w-[2px] mt-2"
+                            style={{ background: 'linear-gradient(180deg, rgba(232,23,93,0.4) 0%, transparent 100%)' }}
+                          />
+                        </div>
+
+                        {/* content */}
+                        <div className="flex flex-col gap-3 pb-2">
+                          <h3 className="text-white font-black" style={{ fontSize: '19px', lineHeight: 1.2 }}>
+                            {item.title}
+                          </h3>
+                          <p className="font-bold uppercase tracking-widest"
+                            style={{ color: 'rgba(148,163,184,0.55)', fontSize: '11px' }}>
+                            {item.institution}
+                          </p>
+                          <span
+                            className="self-start font-black px-3 py-[6px] rounded-sm"
+                            style={{ fontSize: '13px', background: '#e8175d', color: '#fff' }}
+                          >
+                            {item.year}
+                          </span>
+                          <p style={{ color: 'rgba(148,163,184,0.55)', fontSize: '14px', lineHeight: '1.75' }}>
+                            {item.description}
+                          </p>
+                          <a
+                            href={item.certificateUrl || '#'}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={e => !item.certificateUrl && e.preventDefault()}
+                            className="self-start flex items-center gap-2 mt-1 px-4 py-2 rounded-lg font-black tracking-widest uppercase transition-all duration-300"
+                            style={{
+                              fontSize: '11px',
+                              background: item.certificateUrl ? 'rgba(232,23,93,0.15)' : 'rgba(255,255,255,0.03)',
+                              border: `1px solid ${item.certificateUrl ? 'rgba(232,23,93,0.4)' : 'rgba(255,255,255,0.08)'}`,
+                              color: item.certificateUrl ? '#e8175d' : 'rgba(148,163,184,0.25)',
+                              cursor: item.certificateUrl ? 'pointer' : 'not-allowed',
+                            }}
+                          >
+                            <FaExternalLinkAlt style={{ fontSize: '10px' }} />
+                            {item.certificateUrl ? item.certificateLabel : 'Coming Soon'}
+                          </a>
+                        </div>
+                      </motion.div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
             </motion.div>
-          )}
-        </AnimatePresence>
-
-        {/* ── Tools ── */}
-        {(active === 'All' || active === 'Tools') && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            {active === 'All' && (
-              <div className="flex items-center gap-3 mb-6">
-                <div className="h-px flex-1" style={{ background: "rgba(255,255,255,0.06)" }} />
-                <h3 className="text-white font-black text-lg flex items-center gap-2">
-                  <span>🛠</span> Tools & Workflow
-                </h3>
-                <div className="h-px flex-1" style={{ background: "rgba(255,255,255,0.06)" }} />
-              </div>
-            )}
-
-            <div className="grid grid-cols-2 sm:grid-cols-5 gap-4">
-              {tools.map((tool, i) => (
-                <motion.div
-                  key={i}
-                  whileHover={{ scale: 1.06, y: -6 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="flex flex-col items-center justify-center gap-3 p-6 rounded-2xl cursor-default transition-all duration-300"
-                  style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)" }}
-                  onMouseEnter={e => e.currentTarget.style.borderColor = "rgba(232,23,93,0.3)"}
-                  onMouseLeave={e => e.currentTarget.style.borderColor = "rgba(255,255,255,0.07)"}
-                >
-                  <div className="text-3xl" style={{ color: tool.color }}>{tool.icon}</div>
-                  <span style={{ color: "rgba(148,163,184,0.6)", fontSize: "12px", fontWeight: 600 }}>{tool.name}</span>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-        )}
-
-        {/* ── Footer CTA ── */}
-        <div className="mt-16 text-center">
-          <p style={{ color: "rgba(148,163,184,0.35)", fontSize: "11px", letterSpacing: "0.25em", textTransform: "uppercase" }}>
-            Always learning · Always building
-          </p>
+          </AnimatePresence>
         </div>
-
       </div>
     </section>
   );
