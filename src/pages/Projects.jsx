@@ -1,16 +1,12 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FaExternalLinkAlt, FaGithub, FaTimes } from "react-icons/fa";
-import project1Img from "../assets/konaImg.jpg";
+import { FaExternalLinkAlt, FaGithub, FaTimes, FaUser, FaClock } from "react-icons/fa";
 import project2Img from "../assets/Screenshot_108.png";
 import project3Img from "../assets/Screenshot_107.png";
-import project4Img from "../assets/Screenshot_110.png";
 import project5Img from "../assets/Screenshot_111.png";
-import portfolioImg from "../assets/Screenshot_22.png";
 import projectGadgetTechImg from "../assets/Screenshot_35.png";
 
 const projectsData = [
-  
   {
     name: "Scholar Stream",
     image: project2Img,
@@ -105,30 +101,34 @@ const Projects = () => {
   const [selectedProject, setSelectedProject] = useState(null);
 
   return (
-    <section id="projects" className="bg-[#060818] min-h-screen text-slate-300 py-24 px-6 md:px-16 lg:px-32">
+    <section
+      className="min-h-screen text-slate-300 py-24 px-6 md:px-16 lg:px-24"
+      style={{ background: "linear-gradient(135deg, #060e22 0%, #0a1628 50%, #0d1b38 100%)" }}
+    >
       <div className="max-w-6xl mx-auto">
 
-        {/* ── Header ── */}
+        {/* ── Header — reference style ── */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <p className="text-xs uppercase tracking-[0.3em] text-slate-400 mb-4 font-semibold">
-            My Real Works
+          <p className="font-bold tracking-[0.4em] uppercase text-xs mb-3">
+            <span style={{ color: "#6ec6f5" }}>MY </span>
+            <span style={{ color: "#e8175d" }}>PROJECTS</span>
           </p>
-          <h1 className="text-4xl md:text-5xl font-black font-semibold text-white mb-5 tracking-tight">
-            Featured{" "}
-            <span className="bg-gradient-to-r from-orange-400 via-fuchsia-400 to-cyan-400 bg-clip-text text-transparent">
-              Projects
-            </span>
+          <h1
+            className="text-4xl md:text-5xl font-black text-white mb-5"
+            style={{ fontFamily: "'Syne', sans-serif" }}
+          >
+            Featured Projects
           </h1>
-          <div className="w-16 h-[2px] bg-gradient-to-r from-orange-400 via-fuchsia-400 to-cyan-400 mx-auto rounded-full" />
+          <div className="mx-auto" style={{ width: "44px", height: "3px", background: "#e8175d", borderRadius: "2px" }} />
         </motion.div>
 
-        {/* ── Grid ── */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {/* ── Grid — reference blog card style ── */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
           {projectsData.map((project, index) => (
             <motion.div
               key={index}
@@ -136,111 +136,140 @@ const Projects = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: index * 0.08 }}
               viewport={{ once: true }}
-              className="group bg-white/[0.03] border border-white/[0.07] rounded-2xl overflow-hidden hover:border-white/20 transition-all duration-300"
+              className="flex flex-col cursor-pointer group"
+              onClick={() => setSelectedProject(project)}
             >
-              {/* Image */}
-              <div className="relative overflow-hidden aspect-video">
+              {/* Image — large, rounded corners like reference */}
+              <div
+                className="relative overflow-hidden rounded-2xl mb-5"
+                style={{ aspectRatio: "4/3" }}
+              >
                 <img
                   src={project.image}
                   alt={project.name}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-80"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  style={{ filter: "brightness(0.9)" }}
                 />
-              </div>
-
-              {/* Content */}
-              <div className="p-7">
-                <div className="flex flex-wrap gap-[6px] mb-4">
-                  {project.techStack.slice(0, 4).map((tech, idx) => (
-                    <span
-                      key={idx}
-                      className="text-[10px] font-bold tracking-widest uppercase px-3 py-1 bg-white/[0.05] text-slate-400 border border-white/[0.08] rounded-full"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                  {project.techStack.length > 4 && (
-                    <span className="text-[10px] font-bold tracking-widest uppercase px-3 py-1 bg-white/[0.05] text-slate-500 border border-white/[0.08] rounded-full">
-                      +{project.techStack.length - 4} more
-                    </span>
-                  )}
-                </div>
-
-                <h3 className="text-lg font-black text-white mb-2 tracking-tight group-hover:text-orange-300 transition-colors">
-                  {project.name}
-                </h3>
-                <p className="text-slate-400 text-sm leading-relaxed mb-5 line-clamp-3">
-                  {project.description}
-                </p>
-
-                <button
-                  onClick={() => setSelectedProject(project)}
-                  className="w-full py-3 bg-white/[0.05] hover:bg-white/[0.09] border border-white/[0.1] hover:border-white/25 text-white text-sm font-bold rounded-xl flex items-center justify-center gap-2 transition-all"
+                {/* Hover overlay with buttons */}
+                <div
+                  className="absolute inset-0 flex items-center justify-center gap-3 opacity-0 group-hover:opacity-100 transition-all duration-300 rounded-2xl"
+                  style={{ background: "rgba(6,14,34,0.82)" }}
                 >
-                  View Case Study <FaExternalLinkAlt className="text-xs text-orange-400" />
-                </button>
+                  <a
+                    href={project.liveLink}
+                    target="_blank"
+                    rel="noreferrer"
+                    onClick={e => e.stopPropagation()}
+                    className="px-5 py-2 rounded-full text-xs font-bold text-white transition-all"
+                    style={{ background: "#e8175d" }}
+                  >
+                    Live Demo
+                  </a>
+                  <a
+                    href={project.githubLink}
+                    target="_blank"
+                    rel="noreferrer"
+                    onClick={e => e.stopPropagation()}
+                    className="px-5 py-2 rounded-full text-xs font-bold text-white transition-all"
+                    style={{ background: "rgba(255,255,255,0.15)", border: "1px solid rgba(255,255,255,0.25)" }}
+                  >
+                    GitHub
+                  </a>
+                </div>
               </div>
+
+              {/* Text content — reference style: title bold, then meta row */}
+              <h3
+                className="text-white font-bold text-xl mb-3 leading-snug group-hover:transition-colors duration-300"
+                style={{ fontFamily: "'Syne', sans-serif" }}
+                onMouseEnter={e => e.currentTarget.style.color = "#e8175d"}
+                onMouseLeave={e => e.currentTarget.style.color = "#fff"}
+              >
+                {project.name}
+              </h3>
+
+              {/* Meta row — like reference: user icon + role, clock icon + duration */}
+              <div className="flex items-center gap-5 text-xs text-slate-500 mb-3">
+                <span className="flex items-center gap-1.5">
+                  <FaUser style={{ color: "#e8175d" }} />
+                  {project.role}
+                </span>
+                <span className="flex items-center gap-1.5">
+                  <FaClock style={{ color: "#6ec6f5" }} />
+                  {project.duration}
+                </span>
+              </div>
+
+              {/* Short description */}
+              <p className="text-slate-400 text-sm leading-relaxed line-clamp-2 mb-4">
+                {project.description}
+              </p>
+
+              {/* "View Case Study" link — subtle, reference style */}
+              <span
+                className="text-xs font-bold tracking-widest uppercase flex items-center gap-2 transition-colors duration-300"
+                style={{ color: "#e8175d" }}
+              >
+                View Case Study <FaExternalLinkAlt size={10} />
+              </span>
             </motion.div>
           ))}
         </div>
       </div>
 
-      {/* ── Modal ── */}
+      {/* ── Modal — all functionality preserved ── */}
       <AnimatePresence>
         {selectedProject && (
           <motion.div
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
+            className="fixed inset-0 z-50 flex items-center justify-center p-4"
+            style={{ background: "rgba(6,14,34,0.92)", backdropFilter: "blur(8px)" }}
           >
             <motion.div
               initial={{ scale: 0.95, y: 20 }} animate={{ scale: 1, y: 0 }} exit={{ scale: 0.95, y: 20 }}
-              className="bg-[#0d0f1f] w-full max-w-3xl max-h-[90vh] overflow-y-auto rounded-2xl p-8 border border-white/[0.08] relative"
+              className="w-full max-w-3xl max-h-[90vh] overflow-y-auto rounded-2xl p-8 relative"
+              style={{ background: "#0d1b35", border: "1px solid rgba(232,23,93,0.2)" }}
             >
               <button
                 onClick={() => setSelectedProject(null)}
-                className="absolute top-6 right-6 text-slate-500 hover:text-white transition-colors p-1"
+                className="absolute top-6 right-6 text-slate-500 hover:text-white transition-colors"
               >
                 <FaTimes size={20} />
               </button>
 
-              {/* Modal Header */}
-              <h2 className="text-2xl font-black text-white mb-1 tracking-tight">
+              <h2 className="text-2xl font-black text-white mb-1" style={{ fontFamily: "'Syne', sans-serif" }}>
                 {selectedProject.name}
               </h2>
-              <div className="w-10 h-[2px] bg-gradient-to-r from-orange-400 via-fuchsia-400 to-cyan-400 rounded-full mb-5" />
+              <div className="w-10 h-[3px] rounded-full mb-5" style={{ background: "#e8175d" }} />
 
-              {/* Tech Stack */}
-              <div className="flex flex-wrap gap-[6px] mb-5">
+              {/* Tech tags */}
+              <div className="flex flex-wrap gap-2 mb-5">
                 {selectedProject.techStack.map((tech, idx) => (
-                  <span
-                    key={idx}
-                    className="text-[10px] font-bold uppercase px-3 py-1 bg-white/[0.05] text-slate-400 border border-white/[0.08] rounded-full tracking-widest"
-                  >
+                  <span key={idx}
+                    className="text-[10px] font-bold uppercase px-3 py-1 rounded-full tracking-widest"
+                    style={{ background: "rgba(232,23,93,0.12)", color: "#e8175d", border: "1px solid rgba(232,23,93,0.2)" }}>
                     {tech}
                   </span>
                 ))}
               </div>
 
               <div className="flex gap-6 mb-6 text-sm">
-                <p className="text-slate-500">
-                  Role: <span className="text-slate-200 font-semibold">{selectedProject.role}</span>
-                </p>
-                <p className="text-slate-500">
-                  Duration: <span className="text-slate-200 font-semibold">{selectedProject.duration}</span>
-                </p>
+                <p className="text-slate-400">Role: <span className="text-white font-semibold">{selectedProject.role}</span></p>
+                <p className="text-slate-400">Duration: <span className="text-white font-semibold">{selectedProject.duration}</span></p>
               </div>
 
               <div className="space-y-5">
                 {/* Features */}
                 <div>
                   <h4 className="text-white font-black text-xs tracking-[0.2em] uppercase mb-3 flex items-center gap-2">
-                    <span className="w-1 h-4 bg-orange-400 rounded-full inline-block" />
+                    <span className="w-1 h-4 rounded-full inline-block" style={{ background: "#e8175d" }} />
                     Key Features
                   </h4>
                   <ul className="space-y-1">
-                    {selectedProject.features.map((feature, i) => (
+                    {selectedProject.features.map((f, i) => (
                       <li key={i} className="text-slate-400 text-sm flex items-start gap-2">
-                        <span className="text-fuchsia-400 mt-[5px] shrink-0">▸</span>
-                        {feature}
+                        <span className="mt-[5px] shrink-0" style={{ color: "#e8175d" }}>▸</span>
+                        {f}
                       </li>
                     ))}
                   </ul>
@@ -249,7 +278,7 @@ const Projects = () => {
                 {/* Challenges */}
                 <div>
                   <h4 className="text-white font-black text-xs tracking-[0.2em] uppercase mb-2 flex items-center gap-2">
-                    <span className="w-1 h-4 bg-fuchsia-400 rounded-full inline-block" />
+                    <span className="w-1 h-4 rounded-full inline-block" style={{ background: "#a855f7" }} />
                     Challenges
                   </h4>
                   <p className="text-slate-400 text-sm leading-relaxed">{selectedProject.challenges}</p>
@@ -258,7 +287,7 @@ const Projects = () => {
                 {/* Future Plans */}
                 <div>
                   <h4 className="text-white font-black text-xs tracking-[0.2em] uppercase mb-2 flex items-center gap-2">
-                    <span className="w-1 h-4 bg-cyan-400 rounded-full inline-block" />
+                    <span className="w-1 h-4 rounded-full inline-block" style={{ background: "#38bdf8" }} />
                     Future Plans
                   </h4>
                   <p className="text-slate-400 text-sm leading-relaxed">{selectedProject.improvements}</p>
@@ -266,19 +295,16 @@ const Projects = () => {
 
                 {/* Buttons */}
                 <div className="flex gap-3 pt-2">
-                  <a
-                    href={selectedProject.liveLink}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="flex-1 py-3 bg-white/[0.06] hover:bg-white/[0.1] border border-white/[0.1] hover:border-orange-400/40 text-white text-sm font-bold text-center rounded-xl transition-all"
-                  >
+                  <a href={selectedProject.liveLink} target="_blank" rel="noreferrer"
+                    className="flex-1 py-3 text-white text-sm font-bold text-center rounded-xl transition-all"
+                    style={{ background: "linear-gradient(90deg, #e8175d, #c0143c)", boxShadow: "0 4px 20px rgba(232,23,93,0.3)" }}>
                     Live Demo
                   </a>
-                  <a
-                    href={selectedProject.githubLink}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="flex-1 py-3 bg-white/[0.06] hover:bg-white/[0.1] border border-white/[0.1] hover:border-fuchsia-400/40 text-white text-sm font-bold text-center rounded-xl transition-all flex items-center justify-center gap-2"
+                  <a href={selectedProject.githubLink} target="_blank" rel="noreferrer"
+                    className="flex-1 py-3 text-white text-sm font-bold text-center rounded-xl flex items-center justify-center gap-2 transition-all"
+                    style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.12)" }}
+                    onMouseEnter={e => e.currentTarget.style.borderColor = "rgba(232,23,93,0.4)"}
+                    onMouseLeave={e => e.currentTarget.style.borderColor = "rgba(255,255,255,0.12)"}
                   >
                     <FaGithub /> Repository
                   </a>

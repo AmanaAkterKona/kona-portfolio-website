@@ -1,218 +1,168 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { FaGithub, FaLinkedin, FaReact, FaNodeJs } from "react-icons/fa";
-import { HiDownload, HiMail } from "react-icons/hi";
-import { SiMongodb, SiTailwindcss, SiTypescript, SiNextdotjs, SiExpress } from "react-icons/si";
-import { BiCodeAlt } from "react-icons/bi";
-import profileImg from "../assets/WhatsApp Image 2025-12-30 at 11.59.32 PM.jpeg";
+import { FaGithub, FaLinkedin } from "react-icons/fa";
+import { MdEmail } from "react-icons/md";
 
-/* ── Floating Tech Icons — full page spread ── */
-const floatingIcons = [
-  { icon: <FaReact />,       label: "React",      color: "text-cyan-400",    top: "8%",  left: "8%",   delay: 0   },
-  { icon: <SiMongodb />,     label: "MongoDB",    color: "text-emerald-400", top: "45%", left: "6%",   delay: 1.0 },
-  { icon: <FaNodeJs />,      label: "Node.js",    color: "text-green-400",   top: "75%", left: "12%",  delay: 0.5 },
-  { icon: <SiTailwindcss />, label: "Tailwind",   color: "text-cyan-300",    top: "88%", left: "35%",  delay: 1.5 },
-  { icon: <BiCodeAlt />,     label: "MERN",       color: "text-fuchsia-400", top: "18%", left: "44%",  delay: 1.7 },
-  { icon: <SiTypescript />,  label: "TypeScript", color: "text-blue-400",    top: "12%", right: "8%",  delay: 0.3 },
-  { icon: <SiExpress />,     label: "Express",    color: "text-slate-300",   top: "50%", right: "5%",  delay: 1.2 },
-  { icon: <SiNextdotjs />,   label: "Next.js",    color: "text-white",       top: "80%", right: "10%", delay: 0.8 },
+const TYPING_TEXTS = [
+  "MERN Stack Developer",
+  "Web Developer",
+  "Full Stack Engineer",
 ];
 
 const Hero = () => {
+  const [textIndex, setTextIndex] = useState(0);
+  const [displayed, setDisplayed] = useState("");
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  useEffect(() => {
+    const current = TYPING_TEXTS[textIndex];
+    let timeout;
+
+    if (!isDeleting && displayed.length < current.length) {
+      timeout = setTimeout(() => setDisplayed(current.slice(0, displayed.length + 1)), 80);
+    } else if (!isDeleting && displayed.length === current.length) {
+      timeout = setTimeout(() => setIsDeleting(true), 1800);
+    } else if (isDeleting && displayed.length > 0) {
+      timeout = setTimeout(() => setDisplayed(current.slice(0, displayed.length - 1)), 45);
+    } else if (isDeleting && displayed.length === 0) {
+      setIsDeleting(false);
+      setTextIndex((prev) => (prev + 1) % TYPING_TEXTS.length);
+    }
+
+    return () => clearTimeout(timeout);
+  }, [displayed, isDeleting, textIndex]);
+
   return (
-    <section className="relative w-full min-h-screen overflow-hidden"
-      style={{ background: "radial-gradient(ellipse at 20% 50%, #0f0728 0%, #08051a 40%, #020510 100%)" }}
+    <section
+      className="relative w-full min-h-screen overflow-hidden flex flex-col"
+      style={{
+        background: "linear-gradient(135deg, #060e22 0%, #0a1628 40%, #0d1b38 70%, #1a0a2e 100%)",
+      }}
     >
-      {/* ── Subtle grid pattern ── */}
-      <div
-        className="absolute inset-0 opacity-[0.03]"
-        style={{
-          backgroundImage: `linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px),
-                            linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)`,
-          backgroundSize: "60px 60px",
-        }}
-      />
-
-      {/* ── Glow Orbs ── */}
-      <div className="absolute -top-32 -left-32 w-[600px] h-[600px] bg-orange-600/[0.12] blur-[180px] rounded-full" />
-      <div className="absolute top-10 right-0 w-[500px] h-[500px] bg-fuchsia-600/[0.14] blur-[180px] rounded-full" />
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[500px] h-[350px] bg-cyan-600/[0.10] blur-[160px] rounded-full" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] bg-violet-700/[0.08] blur-[120px] rounded-full" />
-
-      {/* ── Floating Tech Icons (desktop only) ── */}
-      {floatingIcons.map((item, i) => (
-        <motion.div
-          key={i}
-          initial={{ opacity: 0, scale: 0.6 }}
-          animate={{ opacity: 1, scale: 1, y: [0, -14, 0] }}
-          transition={{
-            opacity: { delay: item.delay + 0.6, duration: 0.5 },
-            scale:   { delay: item.delay + 0.6, duration: 0.5 },
-            y: { delay: item.delay, duration: 3.2 + i * 0.25, repeat: Infinity, ease: "easeInOut" },
-          }}
-          className="absolute z-10 flex-col items-center gap-1 hidden lg:flex"
-          style={{ top: item.top, left: item.left || undefined, right: item.right || undefined }}
-        >
-          <div className="w-12 h-12 rounded-2xl bg-white/[0.04] border border-white/[0.08] flex items-center justify-center backdrop-blur-md shadow-[0_4px_24px_rgba(0,0,0,0.4)]">
-            <span className={`text-2xl ${item.color}`}>{item.icon}</span>
-          </div>
-          <span className="text-[9px] text-slate-500 font-medium tracking-widest uppercase">{item.label}</span>
-        </motion.div>
-      ))}
-
-      <div className="relative z-10 max-w-7xl mx-auto min-h-screen px-6 md:px-16 flex items-center">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 w-full items-center">
-
-          {/* ── LEFT CONTENT ── */}
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, ease: "easeOut" }}
-            className="text-center lg:text-left"
-          >
-            {/* HELLO TAG */}
-            <motion.span
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              className="inline-block mb-6 px-5 py-2 rounded-full
-              bg-white/[0.04] border border-white/[0.09]
-              text-slate-400 tracking-[0.25em] text-xs font-semibold uppercase"
-            >
-              Hello, I'm
-            </motion.span>
-
-              {/* NAME */}
-            <motion.h1
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.3 }}
-              className="relative text-5xl md:text-7xl font-extrabold leading-tight mb-4"
-            >
-              <span className="relative inline-block bg-gradient-to-r from-white via-blue-300 to-purple-400 bg-clip-text text-transparent">
-                Amana Akter
-                <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent animate-shine" />
-              </span>{" "}
-              <span className="bg-gradient-to-r from-orange-400 via-fuchsia-400 to-cyan-400 bg-clip-text text-transparent">
-    Kona
-  </span>
-            </motion.h1>
-
-            {/* ROLE */}
-            <motion.h2
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.45 }}
-              className="text-lg md:text-xl font-semibold mb-6 text-slate-400 tracking-wide"
-            >
-              MERN Stack Web Developer
-            </motion.h2>
-
-            {/* DESCRIPTION */}
-            <motion.p
-              initial={{ opacity: 0, filter: "blur(6px)" }}
-              animate={{ opacity: 1, filter: "blur(0px)" }}
-              transition={{ delay: 0.55, duration: 0.8 }}
-              className="max-w-md mx-auto lg:mx-0 text-slate-500 mb-10 leading-relaxed text-[15px]"
-            >
-              I build modern, scalable, and human-centered web applications
-              with clean design and smooth user experience.
-            </motion.p>
-
-            {/* SOCIAL ICONS */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.65 }}
-              className="flex justify-center lg:justify-start gap-4 mb-10"
-            >
-              <SocialIcon icon={<FaGithub />}  link="https://github.com/AmanaAkterKona" />
-              <SocialIcon icon={<FaLinkedin />} link="https://www.linkedin.com/in/amena-akter-kona/" />
-              <SocialIcon icon={<HiMail />}     link="mailto:proff.kona@gmail.com" />
-            </motion.div>
-
-            {/* DOWNLOAD BUTTON */}
-            <motion.a
-              whileHover={{ scale: 1.04 }}
-              whileTap={{ scale: 0.96 }}
-              href="/resume.pdf"
-              download="Amana_Akter_Resume.pdf"
-              className="relative inline-flex items-center gap-3 px-8 py-4 rounded-2xl overflow-hidden group"
-            >
-              {/* gradient border */}
-              <span className="absolute inset-0 rounded-2xl bg-gradient-to-r from-orange-500 via-fuchsia-500 to-cyan-500 opacity-70 group-hover:opacity-100 transition-opacity duration-300" />
-              <span className="absolute inset-[1.5px] rounded-2xl bg-[#08051a]" />
-              <HiDownload className="relative z-10 text-xl text-white" />
-              <span className="relative z-10 text-white font-bold tracking-wide">Download Resume</span>
-            </motion.a>
-          </motion.div>
-
-          {/* ── RIGHT IMAGE ── */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.85 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1 }}
-            className="flex justify-center lg:justify-end"
-          >
-            <div className="relative">
-              {/* Rotating Outer Ring */}
-              <div className="absolute inset-[-8px] rounded-full border border-dashed border-fuchsia-500/25 animate-spin-slow" />
-              <div className="absolute inset-[-20px] rounded-full border border-dashed border-orange-500/15 animate-spin-slow" style={{ animationDirection: "reverse", animationDuration: "15s" }} />
-
-              {/* Glow */}
-              <div className="absolute inset-[-15px] bg-fuchsia-600/25 blur-[50px] rounded-full animate-pulse" />
-              <div className="absolute inset-[-3px] bg-gradient-to-br from-orange-500 via-fuchsia-500 to-cyan-500 rounded-full blur-[6px] opacity-50" />
-
-              {/* Profile Image */}
-              <motion.div
-                animate={{ y: [0, -15, 0] }}
-                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                className="relative w-80 h-80 md:w-96 md:h-96 lg:w-[420px] lg:h-[420px]
-                  rounded-full overflow-hidden z-10
-                  shadow-[0_0_80px_rgba(217,70,239,0.2)]"
-              >
-                <img
-                  src={profileImg}
-                  alt="Amana Akter Kona"
-                  className="w-full h-full object-cover"
-                />
-              </motion.div>
-
-              {/* Floating Badge */}
-              <motion.span
-                animate={{ y: [0, -6, 0] }}
-                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-                className="absolute bottom-4 right-0 z-20 px-4 py-2 text-xs font-semibold rounded-full bg-white/[0.06] border border-white/[0.12] text-slate-300 backdrop-blur-md tracking-wide"
-              >
-                MERN Stack Developer
-              </motion.span>
-            </div>
-          </motion.div>
-
-        </div>
+      {/* ── Background Elements ── */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-0 left-0 w-[600px] h-[500px] rounded-full opacity-20"
+          style={{ background: "radial-gradient(circle, rgba(0,180,200,0.15) 0%, transparent 70%)" }} />
+        <div className="absolute inset-0 opacity-[0.03]"
+          style={{
+            backgroundImage: "radial-gradient(rgba(255,255,255,0.7) 1px, transparent 1px)",
+            backgroundSize: "32px 32px",
+          }} />
       </div>
+
+      {/* Hero Content - Adjusted for image to sit at the bottom */}
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-16 flex flex-col lg:flex-row items-center gap-10 pt-32 lg:pt-40">
+        
+        {/* ── LEFT CONTENT ── */}
+        <motion.div
+          initial={{ opacity: 0, x: -50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.9 }}
+          className="flex-1 text-left pb-20 lg:pb-32"
+        >
+          <motion.h1 className="text-5xl lg:text-7xl font-black text-white leading-tight mb-4 font-bold">
+            Hey <span className="inline-block animate-wave">👋</span> I'm <span style={{ color: "#e8175d" }}>Amana Akter</span>
+          </motion.h1>
+
+          <div className="h-10 flex items-center mb-6">
+            <span className="text-2xl md:text-3xl font-bold text-slate-300 border-b-2 border-[#e8175d] pb-1">
+              {displayed}
+              <span className="animate-blink ml-1">|</span>
+            </span>
+          </div>
+
+          
+
+
+          <motion.a
+            href="/resume.pdf"
+            whileHover={{ scale: 1.05 }}
+            className="px-10 py-4 rounded-full text-white font-bold tracking-widest uppercase inline-block"
+            style={{ background: "linear-gradient(90deg, #e8175d, #c0143c)", boxShadow: "0 10px 30px rgba(232,23,93,0.4)" }}
+          >
+            My Resume
+          </motion.a>
+        </motion.div>
+
+        {/* ── RIGHT IMAGE - Positioned at bottom ── */}
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1 }}
+          className="flex-1 flex justify-center lg:justify-end items-end self-end"
+        >
+          <div className="relative z-10 w-full max-w-[480px]">
+            {/* Background Glow */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[100%] h-[100%] pointer-events-none opacity-40 blur-[80px]"
+              style={{ background: "radial-gradient(circle, #e8175d 0%, #7c3aed 60%, transparent 80%)" }} />
+            
+            <img 
+              src="https://i.ibb.co.com/JR5drsRZ/ks-I.png" 
+              alt="Kona" 
+              className="relative z-10 w-full object-contain block align-bottom" 
+              style={{ marginBottom: "-2px" }} // সেকশন বর্ডারের গ্যাপ কমানোর জন্য
+            />
+            
+            {/* Floating Badge */}
+            <div className="absolute bottom-20 -left-5 bg-[#0a1628]/90 border border-[#e8175d]/30 backdrop-blur-md px-6 py-3 rounded-xl z-20 shadow-2xl">
+               <p className="text-white font-bold text-sm">MERN Stack Developer</p>
+            </div>
+          </div>
+        </motion.div>
+      </div>
+{/* ── EXPERTISE SECTION ── */}
+<div className="relative z-20 w-full flex justify-center mb-40"> 
+  {/* w-[99%] এবং max-w-full ব্যবহার করলে এটি স্ক্রিনের প্রায় ১০০% জায়গা নিবে */}
+  <div className="w-[99%] max-w-screen-2xl bg-[#081229] py-24 px-12 md:px-32 border border-white/5 shadow-[0_-20px_70px_rgba(0,0,0,0.7)] ">
+    <div className="w-full text-center">
+      <p className="text-[#e8175d] font-bold tracking-[0.4em] uppercase text-l mb-3">My Expertise</p>
+      <h2 className="text-4xl md:text-5xl font-semibold font-black text-white mb-16">What I Do</h2> 
+      
+      {/* বড় স্ক্রিনে কন্টেন্টগুলো সুন্দরভাবে ছড়িয়ে দেওয়ার জন্য gap-16 ব্যবহার করা হয়েছে */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-16 ">
+        <ExpertiseCard 
+            icon="https://cdn-icons-png.flaticon.com/512/1157/1157109.png" 
+            title="Website Design"
+            desc="I create beautiful, responsive, and user-friendly website designs that leave a lasting impression."
+        />
+        <ExpertiseCard 
+            icon="https://cdn-icons-png.flaticon.com/512/711/711284.png" 
+            title="App Development"
+            desc="Building robust and scalable full-stack applications using the latest MERN stack technologies."
+        />
+        <ExpertiseCard 
+            icon="https://cdn-icons-png.flaticon.com/512/1224/1224591.png" 
+            title="UX/UI Design"
+            desc="Focusing on user experience through clean interfaces, smooth animations, and logical workflows."
+        />
+      </div>
+    </div>
+  </div>
+</div>
+
+      <style>{`
+        @keyframes wave {
+          0%, 100% { transform: rotate(0deg); }
+          25% { transform: rotate(-10deg); }
+          75% { transform: rotate(10deg); }
+        }
+        .animate-wave { animation: wave 2s infinite; transform-origin: 70% 70%; }
+        @keyframes blink { 50% { opacity: 0; } }
+        .animate-blink { animation: blink 1s step-start infinite; color: #e8175d; }
+      `}</style>
     </section>
   );
 };
 
-const SocialIcon = ({ icon, link }) => (
-  <motion.a
-    whileHover={{ y: -6, scale: 1.12 }}
-    whileTap={{ scale: 0.95 }}
-    className="
-      w-11 h-11 flex items-center justify-center
-      rounded-full border border-white/[0.1]
-      bg-white/[0.04] text-slate-400
-      hover:text-white hover:border-white/30
-      hover:bg-white/[0.08]
-      transition-all duration-300
-    "
-    href={link}
-    target="_blank"
-    rel="noopener noreferrer"
+const ExpertiseCard = ({ icon, title, desc }) => (
+  <motion.div 
+    whileHover={{ y: -10 }}
+    className="bg-[#0b1a38] border border-white/5 p-10 rounded-3xl text-left transition-all hover:border-[#e8175d]/30 group"
   >
-    <span className="text-lg">{icon}</span>
-  </motion.a>
+    <img src={icon} alt={title} className="w-14 h-14 mb-6 grayscale group-hover:grayscale-0 transition-all duration-500" />
+    <h3 className="text-white text-2xl font-bold mb-4">{title}</h3>
+    <p className="text-slate-400 leading-relaxed text-sm">{desc}</p>
+  </motion.div>
 );
 
 export default Hero;
