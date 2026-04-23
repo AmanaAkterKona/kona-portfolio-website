@@ -59,7 +59,6 @@ const ProjectsCarousel = () => {
     setCurrent((prev) => (prev + dir + projectsData.length) % projectsData.length);
   };
 
-  // ── Auto-play: প্রতি 3.5 সেকেন্ডে next, hover করলে pause ──
   useEffect(() => {
     if (paused) return;
     const timer = setInterval(() => {
@@ -73,17 +72,19 @@ const ProjectsCarousel = () => {
 
   return (
     <section
-      className="w-full py-28 px-6 md:px-16 lg:px-28"
+      className="w-full py-16 sm:py-20 md:py-28 px-4 sm:px-8 md:px-16 md:pl-[98px] lg:px-28"
       style={{ background: "linear-gradient(135deg, #060e22 0%, #0a1628 50%, #0d1b38 100%)" }}
     >
       {/* Header */}
-      <div className="text-center mb-16">
+      <div className="text-center mb-10 sm:mb-16">
         <p className="font-bold tracking-[0.4em] uppercase text-xs mb-3">
           <span style={{ color: "#6ec6f5" }}>MY </span>
           <span style={{ color: "#e8175d" }}>PROJECTS</span>
         </p>
-        <h2 className="text-4xl md:text-5xl font-black text-white mb-4"
-          style={{ fontFamily: "'Syne', sans-serif" }}>
+        <h2
+          className="font-black text-white mb-4"
+          style={{ fontFamily: "'Syne', sans-serif", fontSize: "clamp(28px, 5vw, 48px)" }}
+        >
           Featured Projects
         </h2>
         <div className="mx-auto" style={{ width: "44px", height: "3px", background: "#e8175d", borderRadius: "2px" }} />
@@ -92,7 +93,7 @@ const ProjectsCarousel = () => {
       {/* Carousel */}
       <div className="max-w-6xl mx-auto">
         <div
-          className="relative"
+          className="relative px-6 sm:px-8"
           onMouseEnter={() => setPaused(true)}
           onMouseLeave={() => setPaused(false)}
         >
@@ -102,48 +103,54 @@ const ProjectsCarousel = () => {
               key={current}
               custom={direction}
               variants={{
-                enter: (d) => ({ opacity: 0, x: d > 0 ? 100 : -100 }),
+                enter: (d) => ({ opacity: 0, x: d > 0 ? 80 : -80 }),
                 center: { opacity: 1, x: 0 },
-                exit:  (d) => ({ opacity: 0, x: d > 0 ? -100 : 100 }),
+                exit:  (d) => ({ opacity: 0, x: d > 0 ? -80 : 80 }),
               }}
               initial="enter"
               animate="center"
               exit="exit"
               transition={{ duration: 0.45, ease: "easeInOut" }}
-              className="grid grid-cols-1 lg:grid-cols-2 gap-0 rounded-3xl overflow-hidden"
-              style={{ border: "1px solid rgba(255,255,255,0.07)", minHeight: "460px" }}
+              className="grid grid-cols-1 lg:grid-cols-2 gap-0 rounded-2xl sm:rounded-3xl overflow-hidden"
+              style={{ border: "1px solid rgba(255,255,255,0.07)" }}
             >
-              {/* Image — left, taller */}
-              <div className="relative overflow-hidden" style={{ minHeight: "420px" }}>
+              {/* Image */}
+              <div className="relative overflow-hidden" style={{ minHeight: "220px", maxHeight: "420px" }}>
                 <img
                   src={project.image}
                   alt={project.name}
                   className="w-full h-full object-cover"
-                  style={{ filter: "brightness(0.88)" }}
+                  style={{ filter: "brightness(0.88)", minHeight: "220px" }}
                 />
+                {/* right fade — only on lg */}
                 <div className="absolute inset-0 hidden lg:block"
                   style={{ background: "linear-gradient(90deg, transparent 55%, rgba(9,19,36,1) 100%)" }} />
+                {/* bottom fade — only on mobile */}
+                <div className="absolute inset-0 lg:hidden"
+                  style={{ background: "linear-gradient(180deg, transparent 50%, rgba(9,19,36,1) 100%)" }} />
               </div>
 
-              {/* Content — right */}
+              {/* Content */}
               <div
-                className="flex flex-col justify-center px-12 py-14"
+                className="flex flex-col justify-center px-6 sm:px-10 lg:px-12 py-8 sm:py-10 lg:py-14"
                 style={{ background: "linear-gradient(135deg, #0d1b35, #091324)" }}
               >
                 {/* Number */}
-                <p className="text-xs font-bold tracking-widest uppercase mb-4"
+                <p className="text-xs font-bold tracking-widest uppercase mb-3 sm:mb-4"
                   style={{ color: "#e8175d" }}>
                   {String(current + 1).padStart(2, "0")} / {String(projectsData.length).padStart(2, "0")}
                 </p>
 
                 {/* Title */}
-                <h3 className="text-3xl md:text-4xl font-black text-white mb-5 leading-tight"
-                  style={{ fontFamily: "'Syne', sans-serif" }}>
+                <h3
+                  className="font-black text-white mb-3 sm:mb-5 leading-tight"
+                  style={{ fontFamily: "'Syne', sans-serif", fontSize: "clamp(22px, 4vw, 40px)" }}
+                >
                   {project.name}
                 </h3>
 
                 {/* Meta */}
-                <div className="flex items-center gap-5 text-xs text-slate-500 mb-5">
+                <div className="flex flex-wrap items-center gap-3 sm:gap-5 text-xs text-slate-500 mb-4 sm:mb-5">
                   <span className="flex items-center gap-1.5">
                     <FaUser style={{ color: "#e8175d" }} /> {project.role}
                   </span>
@@ -153,13 +160,16 @@ const ProjectsCarousel = () => {
                 </div>
 
                 {/* Description */}
-                <p className="text-slate-400 text-sm leading-relaxed mb-7">{project.description}</p>
+                <p className="text-slate-400 leading-relaxed mb-5 sm:mb-7"
+                  style={{ fontSize: "clamp(12px, 1.8vw, 14px)" }}>
+                  {project.description}
+                </p>
 
                 {/* Tech tags */}
-                <div className="flex flex-wrap gap-2 mb-9">
+                <div className="flex flex-wrap gap-2 mb-6 sm:mb-9">
                   {project.techStack.map((t, i) => (
                     <span key={i}
-                      className="text-[10px] font-bold uppercase px-3 py-1 rounded-full tracking-widest"
+                      className="text-[10px] font-bold uppercase px-2 sm:px-3 py-1 rounded-full tracking-widest"
                       style={{ background: "rgba(232,23,93,0.1)", color: "#e8175d", border: "1px solid rgba(232,23,93,0.2)" }}>
                       {t}
                     </span>
@@ -167,14 +177,14 @@ const ProjectsCarousel = () => {
                 </div>
 
                 {/* Buttons */}
-                <div className="flex gap-3">
+                <div className="flex flex-wrap gap-3">
                   <a href={project.liveLink} target="_blank" rel="noreferrer"
-                    className="flex items-center gap-2 px-7 py-3 rounded-full text-xs font-bold text-white tracking-widest uppercase transition-all"
+                    className="flex items-center gap-2 px-5 sm:px-7 py-2.5 sm:py-3 rounded-full text-xs font-bold text-white tracking-widest uppercase transition-all"
                     style={{ background: "linear-gradient(90deg, #e8175d, #c0143c)", boxShadow: "0 4px 20px rgba(232,23,93,0.35)" }}>
                     <FaExternalLinkAlt size={10} /> Live Demo
                   </a>
                   <a href={project.githubLink} target="_blank" rel="noreferrer"
-                    className="flex items-center gap-2 px-7 py-3 rounded-full text-xs font-bold text-slate-300 hover:text-white tracking-widest uppercase transition-all"
+                    className="flex items-center gap-2 px-5 sm:px-7 py-2.5 sm:py-3 rounded-full text-xs font-bold text-slate-300 hover:text-white tracking-widest uppercase transition-all"
                     style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.12)" }}>
                     <FaGithub /> GitHub
                   </a>
@@ -184,23 +194,26 @@ const ProjectsCarousel = () => {
           </AnimatePresence>
 
           {/* Arrow buttons */}
-          <button onClick={() => { setPaused(true); go(-1); }}
-            className="absolute -left-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full flex items-center justify-center text-white z-10 shadow-2xl transition-transform hover:scale-110"
-            style={{ background: "linear-gradient(135deg, #e8175d, #c0143c)" }}>
-            <FaChevronLeft size={15} />
+          <button
+            onClick={() => { setPaused(true); go(-1); }}
+            className="absolute left-0 sm:-left-2 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-12 sm:h-12 rounded-full flex items-center justify-center text-white z-10 shadow-2xl transition-transform hover:scale-110"
+            style={{ background: "linear-gradient(135deg, #e8175d, #c0143c)" }}
+          >
+            <FaChevronLeft size={13} />
           </button>
-          <button onClick={() => { setPaused(true); go(1); }}
-            className="absolute -right-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full flex items-center justify-center text-white z-10 shadow-2xl transition-transform hover:scale-110"
-            style={{ background: "linear-gradient(135deg, #e8175d, #c0143c)" }}>
-            <FaChevronRight size={15} />
+          <button
+            onClick={() => { setPaused(true); go(1); }}
+            className="absolute right-0 sm:-right-2 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-12 sm:h-12 rounded-full flex items-center justify-center text-white z-10 shadow-2xl transition-transform hover:scale-110"
+            style={{ background: "linear-gradient(135deg, #e8175d, #c0143c)" }}
+          >
+            <FaChevronRight size={13} />
           </button>
         </div>
 
         {/* Progress bar + dots */}
-        <div className="flex flex-col items-center gap-4 mt-10">
-          {/* Auto-play progress bar */}
+        <div className="flex flex-col items-center gap-4 mt-8 sm:mt-10">
           {!paused && (
-            <div className="w-48 h-[3px] rounded-full overflow-hidden" style={{ background: "rgba(255,255,255,0.1)" }}>
+            <div className="w-36 sm:w-48 h-[3px] rounded-full overflow-hidden" style={{ background: "rgba(255,255,255,0.1)" }}>
               <motion.div
                 key={current}
                 initial={{ width: "0%" }}
@@ -212,14 +225,15 @@ const ProjectsCarousel = () => {
             </div>
           )}
 
-          {/* Dot indicators */}
+          {/* Dots */}
           <div className="flex justify-center gap-2">
             {projectsData.map((_, i) => (
-              <button key={i}
+              <button
+                key={i}
                 onClick={() => { setDirection(i > current ? 1 : -1); setCurrent(i); setPaused(true); }}
                 className="rounded-full transition-all duration-300"
                 style={{
-                  width: i === current ? "28px" : "8px",
+                  width: i === current ? "24px" : "8px",
                   height: "8px",
                   background: i === current ? "#e8175d" : "rgba(255,255,255,0.2)",
                 }}

@@ -19,15 +19,42 @@ const Contact = () => {
 
   const inputStyle = {
     width: "100%",
-    padding: "15px 18px",
+    padding: "13px 16px",
     borderRadius: "8px",
     background: "rgba(255,255,255,0.04)",
     border: "1px solid rgba(255,255,255,0.12)",
     color: "#fff",
-    fontSize: "15px",
+    fontSize: "14px",
     outline: "none",
     transition: "border-color 0.3s ease",
   };
+
+  const infoItems = [
+    {
+      icon: <MdEmail style={{ color: "#fff", fontSize: "24px" }} />,
+      bg: "#00b4ff",
+      shadow: "rgba(0,180,255,0.3)",
+      label: "My Email",
+      value: "proff.kona@gmail.com",
+      sub: null,
+    },
+    {
+      icon: <FaMapMarkerAlt style={{ color: "#fff", fontSize: "20px" }} />,
+      bg: "#e8175d",
+      shadow: "rgba(232,23,93,0.3)",
+      label: "Address",
+      value: "Shymoli, Dhaka, Bangladesh",
+      sub: null,
+    },
+    {
+      icon: <FaHeadset style={{ color: "#fff", fontSize: "22px" }} />,
+      bg: "#f59e0b",
+      shadow: "rgba(245,158,11,0.3)",
+      label: "Phone",
+      value: "+880 1796575129",
+      sub: "Available: 9AM – 6PM BST",
+    },
+  ];
 
   return (
     <section
@@ -35,50 +62,49 @@ const Contact = () => {
       style={{ background: "linear-gradient(135deg, #0a2a3a 0%, #081525 30%, #0d1030 65%, #1a0828 100%)" }}
     >
       {/* CONTACT watermark */}
-      <div className="absolute inset-0 flex items-center justify-end overflow-hidden pointer-events-none select-none pr-8">
-        <span className="font-black text-white" style={{ fontSize: "20vw", opacity: 0.03, letterSpacing: "-0.05em" }}>
+      <div className="absolute inset-0 flex items-center justify-end overflow-hidden pointer-events-none select-none pr-4 sm:pr-8">
+        <span className="font-black text-white" style={{ fontSize: "clamp(80px, 18vw, 20vw)", opacity: 0.03, letterSpacing: "-0.05em" }}>
           CONTACT
         </span>
       </div>
 
-      <div className="relative z-10 w-full" style={{ padding: "80px 6vw" }}>
-        <div
-          className="w-full grid grid-cols-1 lg:grid-cols-2"
-          style={{ gap: "5vw", alignItems: "start", maxWidth: "1300px", margin: "0 auto" }}
-        >
+      <div className="relative z-10 w-full px-4 sm:px-8 md:pl-[98px] lg:px-[6vw] py-16 sm:py-20 md:py-24">
+        <div className="w-full max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-[5vw] items-start">
 
-          {/* ══ LEFT: Form — standalone, no card bg ══ */}
+          {/* ══ LEFT: Form ══ */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
             transition={{ duration: 0.7 }}
             style={{
               background: "rgba(8,18,37,0.6)",
               border: "1px solid rgba(255,255,255,0.07)",
               borderRadius: "16px",
-              padding: "clamp(32px, 4vw, 56px)",
+              padding: "clamp(24px, 4vw, 52px)",
               backdropFilter: "blur(16px)",
             }}
           >
             <h2
               className="font-bold text-white"
-              style={{ fontSize: "clamp(30px, 3vw, 44px)", fontFamily: "'Syne', sans-serif", lineHeight: 1.2, marginBottom: "16px" }}
+              style={{ fontSize: "clamp(26px, 3.5vw, 44px)", fontFamily: "'Syne', sans-serif", lineHeight: 1.2, marginBottom: "12px" }}
             >
               Let's talk?
             </h2>
-            <p style={{ color: "rgba(148,163,184,0.8)", fontSize: "14px", lineHeight: 1.8, marginBottom: "28px" }}>
+            <p style={{ color: "rgba(148,163,184,0.8)", fontSize: "13px", lineHeight: 1.8, marginBottom: "24px" }}>
               It's all about the humans behind a brand and those experiencing it.
               I'm right there, ready to bring your ideas to life.
             </p>
 
-            <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+            <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
               <input
                 type="text" name="name" placeholder="Name" required
                 value={formData.name} onChange={handleChange} style={inputStyle}
                 onFocus={e => e.target.style.borderColor = "#e8175d"}
                 onBlur={e => e.target.style.borderColor = "rgba(255,255,255,0.12)"}
               />
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px" }}>
+              {/* Email + Phone — stacked on mobile, side by side on sm+ */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-[10px]">
                 <input
                   type="email" name="email" placeholder="Email*" required
                   value={formData.email} onChange={handleChange} style={inputStyle}
@@ -103,11 +129,11 @@ const Contact = () => {
                 <motion.button
                   type="submit" whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
                   style={{
-                    padding: "14px 40px",
+                    padding: "13px 36px",
                     borderRadius: "999px",
                     background: sent ? "rgba(34,197,94,0.9)" : "#e8175d",
                     boxShadow: sent ? "0 8px 24px rgba(34,197,94,0.3)" : "0 8px 28px rgba(232,23,93,0.4)",
-                    color: "#fff", fontWeight: 700, fontSize: "13px",
+                    color: "#fff", fontWeight: 700, fontSize: "12px",
                     letterSpacing: "0.15em", textTransform: "uppercase",
                     border: "none", cursor: "pointer",
                   }}
@@ -118,65 +144,68 @@ const Contact = () => {
             </form>
           </motion.div>
 
-          {/* ══ RIGHT: Info — standalone, open layout ══ */}
+          {/* ══ RIGHT: Info ══ */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
             transition={{ delay: 0.2, duration: 0.7 }}
-            style={{ display: "flex", flexDirection: "column", gap: "0", paddingTop: "8px" }}
+            className="flex flex-col"
           >
-            {/* Email */}
-            <div style={{ display: "flex", alignItems: "flex-start", gap: "22px", padding: "28px 0" }}>
-              <div style={{ width: "60px", height: "60px", borderRadius: "12px", background: "#00b4ff", boxShadow: "0 6px 20px rgba(0,180,255,0.3)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                <MdEmail style={{ color: "#fff", fontSize: "26px" }} />
+            {infoItems.map((item, i) => (
+              <div key={i}>
+                <div className="flex items-start gap-4 sm:gap-6 py-6 sm:py-7">
+                  <div
+                    className="flex-shrink-0 flex items-center justify-center rounded-xl"
+                    style={{
+                      width: "clamp(48px, 6vw, 60px)",
+                      height: "clamp(48px, 6vw, 60px)",
+                      background: item.bg,
+                      boxShadow: `0 6px 20px ${item.shadow}`,
+                    }}
+                  >
+                    {item.icon}
+                  </div>
+                  <div className="pt-1">
+                    <p style={{ color: "rgba(148,163,184,0.6)", fontSize: "10px", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: "6px" }}>
+                      {item.label}
+                    </p>
+                    <p style={{ color: "#fff", fontSize: "clamp(13px, 2vw, 16px)", fontWeight: 500, lineHeight: 1.5 }}>
+                      {item.value}
+                    </p>
+                    {item.sub && (
+                      <p style={{ color: "rgba(148,163,184,0.55)", fontSize: "12px", marginTop: "3px" }}>
+                        {item.sub}
+                      </p>
+                    )}
+                  </div>
+                </div>
+                {i < infoItems.length - 1 && (
+                  <div style={{ height: "1px", background: "rgba(255,255,255,0.07)" }} />
+                )}
               </div>
-              <div style={{ paddingTop: "4px" }}>
-                <p style={{ color: "rgba(148,163,184,0.6)", fontSize: "11px", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: "8px" }}>My Email</p>
-                <p style={{ color: "#fff", fontSize: "16px", fontWeight: 500 }}>proff.kona@gmail.com</p>
-              </div>
-            </div>
+            ))}
 
-            <div style={{ height: "1px", background: "rgba(255,255,255,0.07)" }} />
+            {/* Divider before social */}
+            <div style={{ height: "1px", background: "rgba(255,255,255,0.07)", marginBottom: "24px" }} />
 
-            {/* Address */}
-            <div style={{ display: "flex", alignItems: "flex-start", gap: "22px", padding: "28px 0" }}>
-              <div style={{ width: "60px", height: "60px", borderRadius: "12px", background: "#e8175d", boxShadow: "0 6px 20px rgba(232,23,93,0.3)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                <FaMapMarkerAlt style={{ color: "#fff", fontSize: "22px" }} />
-              </div>
-              <div style={{ paddingTop: "4px" }}>
-                <p style={{ color: "rgba(148,163,184,0.6)", fontSize: "11px", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: "8px" }}>Address</p>
-                <p style={{ color: "#fff", fontSize: "16px", fontWeight: 500, lineHeight: 1.6 }}>
-                  Shymoli, Dhaka,<br />Bangladesh
-                </p>
-              </div>
-            </div>
-
-            <div style={{ height: "1px", background: "rgba(255,255,255,0.07)" }} />
-
-            {/* Phone */}
-            <div style={{ display: "flex", alignItems: "flex-start", gap: "22px", padding: "28px 0" }}>
-              <div style={{ width: "60px", height: "60px", borderRadius: "12px", background: "#f59e0b", boxShadow: "0 6px 20px rgba(245,158,11,0.3)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                <FaHeadset style={{ color: "#fff", fontSize: "24px" }} />
-              </div>
-              <div style={{ paddingTop: "4px" }}>
-                <p style={{ color: "rgba(148,163,184,0.6)", fontSize: "11px", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: "8px" }}>Phone</p>
-                <p style={{ color: "#fff", fontSize: "16px", fontWeight: 500 }}>+880 1796575129</p>
-                <p style={{ color: "rgba(148,163,184,0.55)", fontSize: "13px", marginTop: "4px" }}>Available: 9AM – 6PM BST</p>
-              </div>
-            </div>
-
-            <div style={{ height: "1px", background: "rgba(255,255,255,0.07)" }} />
-
-            {/* Social */}
-            <div style={{ display: "flex", gap: "12px", paddingTop: "28px" }}>
+            {/* Social icons */}
+            <div className="flex gap-3">
               {[
                 { icon: <FaGithub size={17} />,   href: "https://github.com/AmanaAkterKona" },
                 { icon: <FaLinkedin size={17} />, href: "https://www.linkedin.com/in/amena-akter-kona/" },
                 { icon: <MdEmail size={19} />,    href: "mailto:proff.kona@gmail.com" },
               ].map((s, i) => (
-                <motion.a key={i} href={s.href} target="_blank" rel="noreferrer"
+                <motion.a
+                  key={i} href={s.href} target="_blank" rel="noreferrer"
                   whileHover={{ y: -4, scale: 1.1 }}
-                  style={{ width: "44px", height: "44px", borderRadius: "50%", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", display: "flex", alignItems: "center", justifyContent: "center", color: "rgba(148,163,184,0.7)", transition: "all 0.3s" }}
+                  className="flex items-center justify-center rounded-full transition-all duration-300"
+                  style={{
+                    width: "42px", height: "42px",
+                    background: "rgba(255,255,255,0.05)",
+                    border: "1px solid rgba(255,255,255,0.1)",
+                    color: "rgba(148,163,184,0.7)",
+                  }}
                   onMouseEnter={e => { e.currentTarget.style.borderColor = "rgba(232,23,93,0.5)"; e.currentTarget.style.color = "#fff"; }}
                   onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)"; e.currentTarget.style.color = "rgba(148,163,184,0.7)"; }}
                 >
@@ -190,7 +219,7 @@ const Contact = () => {
       </div>
 
       {copied && (
-        <div className="fixed bottom-10 right-10 z-50 px-6 py-3 rounded-lg text-sm text-white font-semibold"
+        <div className="fixed bottom-6 right-6 z-50 px-5 py-3 rounded-lg text-sm text-white font-semibold"
           style={{ background: "rgba(34,197,94,0.9)", backdropFilter: "blur(8px)" }}>
           ✓ Copied!
         </div>
