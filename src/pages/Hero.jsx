@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
-
+import cloude from "../assets/cloude.png"
 const TYPING_TEXTS = [
   "MERN Stack Developer",
   "Web Developer",
@@ -83,32 +83,43 @@ const Hero = () => {
             My Resume
           </motion.a>
         </motion.div>
+{/* ── RIGHT IMAGE - Positioned at bottom ── */}
+<motion.div
+  initial={{ opacity: 0, y: 50 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ duration: 1 }}
+  className="flex-1 flex justify-center lg:justify-end items-end self-end relative"
+>
+  <div className="relative z-10 w-full max-w-[480px]">
+    
+    {/* ── Background Cloud/Color Image ── */}
+    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[10%] h-auto pointer-events-none z-0">
+      <img 
+        src={cloude} 
+        alt="background-cloud" 
+        className="w-full opacity-80 animate-pulse-slow" 
+        style={{ filter: "brightness(1.2) contrast(1.1)" }}
+      />
+    </div>
 
-        {/* ── RIGHT IMAGE - Positioned at bottom ── */}
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1 }}
-          className="flex-1 flex justify-center lg:justify-end items-end self-end"
-        >
-          <div className="relative z-10 w-full max-w-[480px]">
-            {/* Background Glow */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[100%] h-[100%] pointer-events-none opacity-40 blur-[80px]"
-              style={{ background: "radial-gradient(circle, #e8175d 0%, #7c3aed 60%, transparent 80%)" }} />
-            
-            <img 
-              src="https://i.ibb.co.com/JR5drsRZ/ks-I.png" 
-              alt="Kona" 
-              className="relative z-10 w-full object-contain block align-bottom" 
-              style={{ marginBottom: "-2px" }} // সেকশন বর্ডারের গ্যাপ কমানোর জন্য
-            />
-            
-            {/* Floating Badge */}
-            <div className="absolute bottom-20 -left-5 bg-[#0a1628]/90 border border-[#e8175d]/30 backdrop-blur-md px-6 py-3 rounded-xl z-20 shadow-2xl">
-               <p className="text-white font-bold text-sm">MERN Stack Developer</p>
-            </div>
-          </div>
-        </motion.div>
+    {/* Background Glow (Optional: Keep it for extra depth) */}
+    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[100%] h-[100%] pointer-events-none opacity-30 blur-[100px] z-0"
+      style={{ background: "radial-gradient(circle, #e8175d 0%, #7c3aed 60%, transparent 80%)" }} />
+    
+    {/* Main Profile Image */}
+    <img 
+      src="https://i.ibb.co.com/JR5drsRZ/ks-I.png" 
+      alt="Kona" 
+      className="relative z-10 w-full object-contain block align-bottom" 
+      style={{ marginBottom: "-2px" }} 
+    />
+    
+    {/* Floating Badge */}
+    <div className="absolute bottom-20 -left-5 bg-[#0a1628]/90 border border-[#e8175d]/30 backdrop-blur-md px-6 py-3 rounded-xl z-20 shadow-2xl">
+       <p className="text-white font-bold text-sm">MERN Stack Developer</p>
+    </div>
+  </div>
+</motion.div>
       </div>
 {/* ── EXPERTISE SECTION ── */}
 <div className="relative z-20 w-full flex justify-center mb-40"> 

@@ -9,6 +9,7 @@ import Skills from "../pages/Skills";
 import Projects from "../pages/Projects";
 import Contact from "../pages/Contact";
 import ProjectsCarousel from "../pages/ProjectsCarousel";
+import FreelanceSection from "../pages/FreelanceSection";
 
 
 const Home = () => {
@@ -72,7 +73,7 @@ const Home = () => {
 
         <section id="about"><About /></section>
         <section id="skills"><Skills /></section>
-
+       
         <ProjectsCarousel />
 
         <section id="contact"><Contact /></section>
