@@ -3,6 +3,10 @@ import { motion } from "framer-motion";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import cloude from "../assets/cloude.png";
+import tools1 from "../assets/pencil.png"
+import tools2 from "../assets/round.png"
+import tools3 from "../assets/tools.png"
+import line from "../assets/pechline.png"
 
 const TYPING_TEXTS = [
   "MERN Stack Developer",
@@ -141,9 +145,16 @@ const Hero = () => {
       {/* ── EXPERTISE SECTION ── */}
       <div className="relative z-20 w-full flex justify-center mb-20 sm:mb-32 md:mb-40 mt-8 lg:mt-0 md:pl-[78px]">
         <div
-          className="w-full max-w-screen-2xl py-14 sm:py-20 px-4 sm:px-10 md:px-20 lg:px-32 border border-white/5 shadow-[0_-20px_70px_rgba(0,0,0,0.7)]"
+          className="relative w-full max-w-screen-2xl py-14 sm:py-20 px-4 sm:px-10 md:px-20 lg:px-32 border border-white/5 shadow-[0_-20px_70px_rgba(0,0,0,0.7)]"
           style={{ background: "#081229" }}
         >
+          {/* ✅ Line decoration - bottom right corner */}
+          <img
+            src={line}
+            alt="decoration"
+            className="absolute bottom-0 right-0 w-40 sm:w-52 pointer-events-none opacity-80"
+          />
+
           <div className="w-full text-center">
             <p className="text-[#e8175d] font-bold tracking-[0.4em] uppercase text-sm mb-3">
               My Expertise
@@ -157,17 +168,17 @@ const Hero = () => {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-10 lg:gap-16">
               <ExpertiseCard
-                icon="https://cdn-icons-png.flaticon.com/512/1157/1157109.png"
+                icon={tools1}
                 title="Website Design"
                 desc="I create beautiful, responsive, and user-friendly website designs that leave a lasting impression."
               />
               <ExpertiseCard
-                icon="https://cdn-icons-png.flaticon.com/512/711/711284.png"
+                icon={tools2}
                 title="App Development"
                 desc="Building robust and scalable full-stack applications using the latest MERN stack technologies."
               />
               <ExpertiseCard
-                icon="https://cdn-icons-png.flaticon.com/512/1224/1224591.png"
+                icon={tools3}
                 title="UX/UI Design"
                 desc="Focusing on user experience through clean interfaces, smooth animations, and logical workflows."
               />
@@ -199,7 +210,7 @@ const ExpertiseCard = ({ icon, title, desc }) => (
     <img
       src={icon}
       alt={title}
-      className="w-12 h-12 sm:w-14 sm:h-14 mb-5 sm:mb-6 grayscale group-hover:grayscale-0 transition-all duration-500"
+      className="w-36 h-32 sm:w-44 sm:h-36 mb-5 sm:mb-6 transition-all duration-500"
     />
     <h3 className="text-white text-xl sm:text-2xl font-bold mb-3 sm:mb-4">{title}</h3>
     <p className="text-slate-400 leading-relaxed text-sm">{desc}</p>
