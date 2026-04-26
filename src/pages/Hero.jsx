@@ -143,7 +143,7 @@ const Hero = () => {
       </div>
 
       {/* ── EXPERTISE SECTION ── */}
-      <div className="relative z-20 w-full flex justify-center mb-20 sm:mb-32 md:mb-40 mt-8 lg:mt-0 md:pl-[78px]">
+     <div className="relative z-20 w-full flex justify-center mb-20 sm:mb-32 md:mb-40 mt-8 lg:mt-0 md:pl-[78px] overflow-visible">
         <div
           className="relative w-full max-w-screen-2xl py-14 sm:py-20 px-4 sm:px-10 md:px-20 lg:px-32 border border-white/5 shadow-[0_-20px_70px_rgba(0,0,0,0.7)]"
           style={{ background: "#081229" }}
@@ -152,7 +152,7 @@ const Hero = () => {
           <img
             src={line}
             alt="decoration"
-            className="absolute bottom-0 right-0 w-40 sm:w-52 pointer-events-none opacity-80"
+           className="absolute -bottom-24 right-0 w-56 sm:w-72 pointer-events-none opacity-80 z-10"
           />
 
           <div className="w-full text-center">

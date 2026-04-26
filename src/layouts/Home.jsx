@@ -10,6 +10,8 @@ import Projects from "../pages/Projects";
 import Contact from "../pages/Contact";
 import ProjectsCarousel from "../pages/ProjectsCarousel";
 import FreelanceSection from "../pages/FreelanceSection";
+import HireMeSection from "../pages/HireMeSection";
+import Footer from "../pages/Shared/Footer/Footer";
 
 
 const Home = () => {
@@ -73,10 +75,11 @@ const Home = () => {
 
         <section id="about"><About /></section>
         <section id="skills"><Skills /></section>
-       
+       <HireMeSection></HireMeSection>
         <ProjectsCarousel />
 
         <section id="contact"><Contact /></section>
+
       </div>
     </div>
   );

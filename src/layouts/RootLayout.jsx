@@ -10,12 +10,12 @@ import Contact from '../pages/Contact';
 
 const RootLayout = () => {
   return (
-    <div className="relative">
+    <div className="relative bg-[#060e22]"> {/* এখানে bg যোগ করুন */}
       <CustomCursor />
       <Navbar /> 
 
       <main>
-        <Outlet /> {/* Ekhanei shudhu current route-er page dekhabe */}
+        <Outlet />
       </main>
 
       <Footer />

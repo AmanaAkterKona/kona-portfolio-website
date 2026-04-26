@@ -6,7 +6,7 @@ import { NavLink } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <footer className="relative overflow-hidden">
+    <footer className="relative overflow-hidden " >
 
       {/* Glow orbs */}
       <div className="absolute -top-20 left-1/4 w-[200px] sm:w-[300px] h-[150px] sm:h-[200px] bg-[#e8175d]/10 blur-[100px] rounded-full" />
