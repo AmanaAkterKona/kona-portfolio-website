@@ -2,19 +2,40 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { FaGithub, FaLinkedin, FaMapMarkerAlt, FaHeadset } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
+import emailjs from "@emailjs/browser";
 
 const Contact = () => {
   const [formData, setFormData] = useState({ name: "", email: "", phone: "", project: "" });
   const [sent, setSent] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setSent(true);
-    setFormData({ name: "", email: "", phone: "", project: "" });
-    setTimeout(() => setSent(false), 3000);
+    setLoading(true);
+
+    emailjs.send(
+      "service_qtilw4l",
+      "template_kamdaxc",
+      {
+        from_name: formData.name,
+        from_email: formData.email,
+        phone: formData.phone,
+        message: formData.project,
+      },
+      "gHwV8SW9Bl7JvY-iv"
+    ).then(() => {
+      setSent(true);
+      setLoading(false);
+      setFormData({ name: "", email: "", phone: "", project: "" });
+      setTimeout(() => setSent(false), 3000);
+    }).catch((err) => {
+      setLoading(false);
+      console.error("Failed:", err);
+      alert("Message send failed. Please try again.");
+    });
   };
 
   const inputStyle = {
@@ -58,7 +79,7 @@ const Contact = () => {
 
   return (
     <section
-      className="relative w-full min-h-screen flex items-center"
+      className="relative w-full flex items-center"
       style={{ background: "linear-gradient(135deg, #0a2a3a 0%, #081525 30%, #0d1030 65%, #1a0828 100%)" }}
     >
       {/* CONTACT watermark */}
@@ -103,7 +124,6 @@ const Contact = () => {
                 onFocus={e => e.target.style.borderColor = "#e8175d"}
                 onBlur={e => e.target.style.borderColor = "rgba(255,255,255,0.12)"}
               />
-              {/* Email + Phone — stacked on mobile, side by side on sm+ */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-[10px]">
                 <input
                   type="email" name="email" placeholder="Email*" required
@@ -127,18 +147,21 @@ const Contact = () => {
               />
               <div style={{ paddingTop: "6px" }}>
                 <motion.button
-                  type="submit" whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
+                  type="submit"
+                  disabled={loading}
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.97 }}
                   style={{
                     padding: "13px 36px",
                     borderRadius: "999px",
-                    background: sent ? "rgba(34,197,94,0.9)" : "#e8175d",
+                    background: sent ? "rgba(34,197,94,0.9)" : loading ? "rgba(232,23,93,0.6)" : "#e8175d",
                     boxShadow: sent ? "0 8px 24px rgba(34,197,94,0.3)" : "0 8px 28px rgba(232,23,93,0.4)",
                     color: "#fff", fontWeight: 700, fontSize: "12px",
                     letterSpacing: "0.15em", textTransform: "uppercase",
-                    border: "none", cursor: "pointer",
+                    border: "none", cursor: loading ? "not-allowed" : "pointer",
                   }}
                 >
-                  {sent ? "✓ Sent!" : "Send Message"}
+                  {sent ? "✓ Sent!" : loading ? "Sending..." : "Send Message"}
                 </motion.button>
               </div>
             </form>
@@ -186,10 +209,8 @@ const Contact = () => {
               </div>
             ))}
 
-            {/* Divider before social */}
             <div style={{ height: "1px", background: "rgba(255,255,255,0.07)", marginBottom: "24px" }} />
 
-            {/* Social icons */}
             <div className="flex gap-3">
               {[
                 { icon: <FaGithub size={17} />,   href: "https://github.com/AmanaAkterKona" },
